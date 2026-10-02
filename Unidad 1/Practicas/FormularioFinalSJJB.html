@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="utf-8">
+	<title>Formulario</title>
+</head>
+
+<body background="assets/img/fondo1.jpg" text="#033745" link="#8A4F18" vlink="#5C527F" alink="#B23A48">
+	<center>
+		<font face="Georgia" size="6" color="#B24A32"><br><b>Formulario de Registro de Invitados</b></font>
+		<form action="samuelj.b.190@gmail.com" method="POST"><br>
+			<table cellspacing="5" cellpadding="7" bgcolor="#FFFFFF" border="2" bordercolor="#E0A96D">
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<p><font face="Roboto" size="3" color="#033745"><b>1. Nombre completo</b></font></p>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left">
+						<input type="text" name="nombre" placeholder="Nombre de pila" size="35">
+					</td>
+					<td valign="top" align="left">
+						<input type="text" name="apellido" placeholder="Apellido" size="40">
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<p><font face="Roboto" size="3" color="#033745"><b>2. Correo electrónico</b></font></p>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<input type="email" name="email" placeholder="" size="40">
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<p><font face="Roboto" size="3" color="#033745"><b>3. Número de teléfono</b></font></p>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<input type="tel" name="telefono" placeholder="" size="40">
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<p><font face="Roboto" size="3" color="#033745"><b>4. Dirección</b></font></p>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<input type="text" name="direccion" placeholder="Habla a" size="40">
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<p><font face="Roboto" size="3" color="#033745"><b>5. Fecha de llegada</b></font></p>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<input type="date" name="fecha1" min="2026-03-21" max="2026-12-31" size="40">
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<p><font face="Roboto" size="3" color="#033745"><b>6. Fecha de salida</b></font></p>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<input type="date" name="fecha2" min="2026-03-21" max="2026-12-31" size="40">
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<p><font face="Roboto" size="3" color="#033745"><b>7. Número de invitados</b></font></p>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<input type="number" name="invitados" min="0" max="50" step="1" size="40">
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<p><font face="Roboto" size="3" color="#033745"><b>8. ¿Requiere servicio de transporte desde el aeropuerto?:</b></font></p>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left">
+						<font face="Roboto" size="3" color="#033745"><input type="radio" name="transporte" value="si"> Sí</font>
+					</td>
+					<td valign="middle" align="left">
+						<font face="Roboto" size="3" color="#033745"><input type="radio" name="transporte" value="no"> No</font>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<p><font face="Roboto" size="3" color="#033745"><b>9. Tipo de habitación</b></font></p>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<select name="tipo" size="40">
+							<option value="" disabled selected>Por favor seleccione</option>
+			                <option>Individual</option>
+			                <option>Doble</option>
+			                <option>Suite</option>
+		            	</select>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<p><font face="Roboto" size="3" color="#033745"><b>10. ¿Desea incluir desayuno en su estadía?</b></font></p>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left">
+						<font face="Roboto" size="3" color="#033745"><input type="radio" name="desayuno" value="si"> Sí</font>
+					</td>
+					<td valign="middle" align="left">
+						<font face="Roboto" size="3" color="#033745"><input type="radio" name="desayuno" value="no"> No</font>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left" colspan="2">
+						<p><font face="Roboto" size="3" color="#033745"><b>11. ¿Tiene alguna restricción dietética?</b></font></p>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle" align="left">
+						<font face="Roboto" size="3" color="#033745"><input type="radio" name="dieta" value="si"> Sí</font>
+					</td>
+					<td valign="middle" align="left">
+						<font face="Roboto" size="3" color="#033745"><input type="radio" name="dieta" value="no"> No</font>
+					</td>
+				</tr>
+				<tr>
+					<td valign="bottom" align="center" colspan="2">
+						<br><input type="submit" value="Enviar"><br>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</center>
+<br><br>
+<a target="principal" href="PortadaHTML.html">REGRESAR</a>
+</body>
+
+</html>

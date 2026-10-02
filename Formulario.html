@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de cita</title>
+</head>
+<body>
+  <font face="Arial" size="3">Envío imagen de la práctica que debes de realizar en html, realizando el siguiente formulario:</font>
+  <br>
+  <mark>NOTA:</mark> <font face="Arial" size="5" color="blue"><b>Agrega los campos para email, curp y teléfono.</b></font>
+
+  <br><br><br>
+
+  <form action="#" method="post">
+  <table width="550" cellpadding="10" cellspacing="0" border="0">
+    <tr>
+      <td colspan="2">
+        <font face="Arial" size="5" color="#555555">Formulario de cita</font>
+        <br><br>
+        <font face="Arial" size="2" color="#666666">Si desea concertar una cita de consulta con el Dr. Xavier, complete este formulario de cita y nos pondremos<br>en contacto con usted lo antes posible.</font>
+        <hr color="#cccccc">
+      </td>
+    </tr>
+    <tr>
+      <td width="150"><font face="Arial" size="2" color="#555555">Día de la cita</font></td>
+      <td><input type="date" name="fecha_cita" size="18"></td>
+    </tr>
+    <tr>
+      <td><font face="Arial" size="2" color="#555555">Hora de la cita</font></td>
+      <td><input type="time" name="hora_cita" size="18"></td>
+    </tr>
+    <tr>
+      <td><font face="Arial" size="2" color="#555555">Nombre</font></td>
+      <td><input type="text" name="nombre" placeholder="Nombre" size="16"> &nbsp;<input type="text" name="apellido" placeholder="Apellido" size="16"></td>
+    </tr>
+    <tr>
+      <td><font face="Arial" size="2" color="#555555">Dirección</font></td>
+      <td><input type="text" name="direccion" placeholder="Dirección" size="40"><br><br>
+        <input type="text" name="direccion2" placeholder="Dirección 2" size="40"><br><br>
+        <input type="text" name="ciudad" placeholder="Ciudad" size="16"> &nbsp;<input type="text" name="region" placeholder="Región" size="16"><br><br>
+        <input type="text" name="codigo_postal" placeholder="Código postal" size="16"> &nbsp;
+        <select name="pais"><option>País</option><option>México</option><option>Otro</option></select>
+      </td>
+    </tr>
+    <tr>
+      <td><font face="Arial" size="2" color="#555555">Fecha de nacimiento</font></td>
+      <td><input type="date" name="fecha_nacimiento" size="18"></td>
+    </tr>
+    <tr>
+      <td><font face="Arial" size="2" color="#555555">Email</font></td>
+      <td><input type="email" name="email" placeholder="Email" size="40"></td>
+    </tr>
+    <tr>
+      <td><font face="Arial" size="2" color="#555555">CURP</font></td>
+      <td><input type="text" name="curp" placeholder="CURP" maxlength="18" size="40"></td>
+    </tr>
+    <tr>
+      <td><font face="Arial" size="2" color="#555555">Teléfono</font></td>
+      <td><input type="tel" name="telefono" placeholder="Teléfono" size="40"></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><br><input type="submit" value="Enviar"></td>
+    </tr>
+  </table>
+  </form>
+</body>
+</html>
