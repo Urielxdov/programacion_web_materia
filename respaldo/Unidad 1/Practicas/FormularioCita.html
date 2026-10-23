@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de cita</title>
+</head>
+<body bgcolor="#FFFFFF" text="#3A3A3A">
+  <table align="center" width="620" cellpadding="8" cellspacing="0" border="0">
+    <tr>
+      <td colspan="2">
+        <font face="Arial" size="6">Formulario de cita</font>
+        <br><br>
+        <font face="Arial" size="2">Si desea concertar una cita de consulta con el Dr. Xavier, complete este formulario de cita y nos pondremos en contacto con usted lo antes posible.</font>
+        <hr color="#999999">
+      </td>
+    </tr>
+  </table>
+
+  <form action="#" method="post">
+    <table align="center" width="620" cellpadding="8" cellspacing="0" border="0">
+      <tr>
+        <td width="160"><font face="Arial" size="2"><label for="fecha">Día de la cita</label></font></td>
+        <td><input type="date" id="fecha" name="fecha" required></td>
+      </tr>
+      <tr>
+        <td><font face="Arial" size="2"><label for="hora">Hora de la cita</label></font></td>
+        <td><input type="time" id="hora" name="hora" required></td>
+      </tr>
+      <tr>
+        <td><font face="Arial" size="2"><label for="nombre">Nombre</label></font></td>
+        <td>
+          <input type="text" id="nombre" name="nombre" placeholder="Nombre" size="20" required>
+          <input type="text" id="apellido" name="apellido" placeholder="Apellido" size="20" required>
+        </td>
+      </tr>
+      <tr>
+        <td><font face="Arial" size="2"><label for="email">Email</label></font></td>
+        <td><input type="email" id="email" name="email" placeholder="correo@ejemplo.com" size="44" required></td>
+      </tr>
+      <tr>
+        <td><font face="Arial" size="2"><label for="curp">CURP</label></font></td>
+        <td><input type="text" id="curp" name="curp" placeholder="CURP (18 caracteres)" size="44" maxlength="18" pattern="[A-Za-z]{4}[0-9]{6}[HMhm][A-Za-z]{5}[A-Za-z0-9][0-9]" title="CURP de 18 caracteres, por ejemplo HEGU010101HDFRRL09" required></td>
+      </tr>
+      <tr>
+        <td><font face="Arial" size="2"><label for="telefono">Teléfono</label></font></td>
+        <td><input type="tel" id="telefono" name="telefono" placeholder="10 dígitos" size="44" maxlength="10" pattern="[0-9]{10}" title="Teléfono de 10 dígitos" required></td>
+      </tr>
+      <tr>
+        <td><font face="Arial" size="2"><label for="direccion">Dirección</label></font></td>
+        <td>
+          <input type="text" id="direccion" name="direccion" placeholder="Dirección" size="44" required>
+          <br><br>
+          <input type="text" id="direccion2" name="direccion2" placeholder="Dirección 2" size="44">
+          <br><br>
+          <input type="text" id="ciudad" name="ciudad" placeholder="Ciudad" size="20" required>
+          <input type="text" id="region" name="region" placeholder="Región" size="20" required>
+          <br><br>
+          <input type="text" id="cp" name="cp" placeholder="Código postal" size="20" maxlength="5" required>
+          <select id="pais" name="pais" required>
+            <option value="">País</option>
+            <option value="MX">México</option>
+            <option value="US">Estados Unidos</option>
+            <option value="CA">Canadá</option>
+            <option value="CO">Colombia</option>
+            <option value="ES">España</option>
+            <option value="AR">Argentina</option>
+            <option value="OT">Otro</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><font face="Arial" size="2"><label for="nacimiento">Fecha de nacimiento</label></font></td>
+        <td><input type="date" id="nacimiento" name="nacimiento" required></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><input type="submit" value="Enviar" style="background-color:#4A4A4A; color:#FFFFFF; width:100px; height:36px; border:0;"></td>
+      </tr>
+    </table>
+  </form>
+</body>
+</html>

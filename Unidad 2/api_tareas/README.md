@@ -7,12 +7,32 @@ config/          configuración del proyecto (settings, urls)
 tasks/           app: modelo, serializer, vista, tests, frontend (templates/index.html)
 clientes/        cliente.py (requests)
 build.sh         build de Render
+Dockerfile       imagen de producción (Gunicorn); docker-compose.yml para desarrollo
+release.sh       migraciones + usuario demo (Cloud Run Job)
+DEPLOY_GCP.md    guía de despliegue en Google Cloud Run + Cloud SQL
 render.yaml      blueprint de Render
 ```
 
 ## 1. Ejecutar en localhost
 
-Requiere Python 3.11+.
+### Con Docker Compose (recomendado)
+
+Requiere Docker Desktop. Levanta PostgreSQL 16 y la API; aplica migraciones y crea el usuario demo.
+
+```bash
+cd "Unidad 2/api_tareas"
+copy .env.example .env            # Linux/macOS: cp .env.example .env
+# edita .env: DEMO_PASSWORD y DB_PASSWORD
+docker compose up --build
+```
+
+- Pruebas: `docker compose exec web python manage.py test`
+- Consola SQL: `docker compose exec db psql -U postgres -d api_tareas`
+- Detener: `docker compose down` (los datos quedan en el volumen `pgdata`; `down -v` los borra)
+
+### Sin Docker
+
+Requiere Python 3.11+ y PostgreSQL corriendo con los valores `DB_*` de `.env` (con el compose, `docker compose up db` basta).
 
 ```bash
 cd "Unidad 2/api_tareas"
@@ -91,11 +111,11 @@ Mismo código; solo cambian las variables de entorno:
 |---|---|---|
 | Servidor | `runserver` | Gunicorn |
 | `DEBUG` | True | False |
-| Base de datos | SQLite | SQLite (temporal) o PostgreSQL (`DATABASE_URL`) |
+| Base de datos | PostgreSQL (Docker, variables `DB_*`) | PostgreSQL de Render (`DATABASE_URL`) |
 | HTTPS | No (http) | Lo provee Render; Django redirige a HTTPS |
 | Acceso | 127.0.0.1 | URL pública `*.onrender.com` |
 
-> **Advertencia:** el disco del plan gratuito de Render es efímero. Con SQLite los datos (incluidas tareas y usuarios) se pierden en cada redeploy o reinicio; `build.sh` recrea el usuario demo, pero no las tareas. Para persistencia crea una base PostgreSQL en Render y define `DATABASE_URL` (ya soportado).
+> **Nota:** `render.yaml` crea también la base PostgreSQL gratuita (`api-tareas-db`) y pasa su `DATABASE_URL` al servicio web. La base gratuita de Render expira a los 30 días.
 
 ## 6. Despliegue en Render
 
@@ -108,3 +128,7 @@ Mismo código; solo cambian las variables de entorno:
 4. Cuando termine el deploy, prueba con la URL pública: `python clientes/cliente.py https://TU-APP.onrender.com`.
 
 Estado: la configuración está preparada pero **el despliegue en Render no se ha probado**; el proyecto se verificó únicamente en localhost (tests y solicitudes reales). Gunicorn no corre en Windows, por lo que tampoco se probó localmente.
+
+## 7. Despliegue en Google Cloud
+
+Cloud Run + Cloud SQL (PostgreSQL). Pasos completos en [DEPLOY_GCP.md](DEPLOY_GCP.md). La imagen de producción se probó localmente (Gunicorn, migraciones, HTTPS, estáticos); el despliegue en Google Cloud no se ha probado.
