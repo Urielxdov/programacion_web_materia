@@ -1,0 +1,52 @@
+:root {
+  font-family: Arial, sans-serif;
+  color: #1c2b40;
+  background: #eef3f9;
+  line-height: 1.5;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; padding: 40px 16px; }
+.container {
+  max-width: 620px;
+  margin: auto;
+  padding: 36px;
+  background: white;
+  border: 1px solid #dce4ef;
+  border-radius: 18px;
+  box-shadow: 0 14px 40px #2339580d;
+}
+.etiqueta { color: #275bb2; font-size: .8rem; font-weight: bold; letter-spacing: .08em; text-transform: uppercase; }
+h1 { margin: 8px 0; font-size: 2.2rem; letter-spacing: -.04em; }
+header > p:last-child, .nota { color: #526176; }
+form { margin-top: 28px; }
+label { display: block; margin-bottom: 6px; font-weight: bold; }
+input, textarea {
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 12px;
+  border: 1px solid #aebdd0;
+  border-radius: 8px;
+  background: #fcfdff;
+  color: inherit;
+  font: inherit;
+}
+textarea { resize: vertical; min-height: 120px; }
+input:focus-visible, textarea:focus-visible, button:focus-visible { outline: 3px solid #9dbff5; outline-offset: 3px; }
+button { padding: 12px 22px; border: 0; border-radius: 8px; background: #245ab5; color: white; font: inherit; font-weight: bold; cursor: pointer; }
+button:hover { background: #1b468e; }
+.nota { font-size: .82rem; }
+section { margin-top: 30px; padding-top: 18px; border-top: 1px solid #dce4ef; }
+.encabezado-mensajes { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+h2 { margin: 0; font-size: 1.3rem; }
+#contadorMensajes { color: #526176; font-size: .85rem; }
+.vacio { padding: 22px; border: 1px dashed #aebdd0; border-radius: 10px; color: #526176; text-align: center; }
+.mensaje { margin-top: 14px; padding: 18px; border: 1px solid #dce4ef; border-left: 4px solid #245ab5; border-radius: 8px; background: #f5f8fd; overflow-wrap: anywhere; }
+.mensaje p { margin: 5px 0; white-space: pre-wrap; }
+.estado { color: #265d3b; font-size: .85rem; }
+@media (max-width: 480px) {
+  body { padding: 16px 10px; }
+  .container { padding: 24px 20px; }
+  button { width: 100%; }
+}

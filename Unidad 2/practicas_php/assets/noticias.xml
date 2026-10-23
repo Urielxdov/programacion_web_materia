@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel>
+<title>Noticias del aula · Unidad 2</title><link>https://www.php.net/</link><description>Canal de demostración para practicar la lectura de RSS con PHP.</description><language>es</language>
+<item><title>Del formulario al servidor</title><description>Los formularios envían datos que PHP puede validar y presentar de forma segura. Revisa la primera práctica para experimentar con POST.</description><link>https://www.php.net/manual/es/tutorial.forms.php</link><pubDate>Tue, 20 Oct 2026 08:00:00 -0600</pubDate></item>
+<item><title>Conservar información entre visitas</title><description>Las sesiones permiten mantener el acceso a un área protegida. Los archivos conservan las firmas, los votos y el contador después de cerrar el navegador.</description><link>https://www.php.net/manual/es/book.session.php</link><pubDate>Tue, 20 Oct 2026 07:30:00 -0600</pubDate></item>
+<item><title>Un canal RSS es un documento XML</title><description>SimpleXML transforma los elementos channel e item en objetos que podemos recorrer para mostrar los titulares de un canal.</description><link>https://www.php.net/manual/es/book.simplexml.php</link><pubDate>Tue, 20 Oct 2026 07:00:00 -0600</pubDate></item>
+</channel></rss>

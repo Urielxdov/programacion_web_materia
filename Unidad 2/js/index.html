@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto | Práctica de JavaScript</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <p class="etiqueta">Unidad 2 · JavaScript</p>
+      <h1>Contacto</h1>
+      <p>Escribe un mensaje y observa cómo aparece en la página.</p>
+    </header>
+
+    <form id="formulario">
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" name="nombre" autocomplete="name"
+             placeholder="Tu nombre" maxlength="100" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" autocomplete="email"
+             placeholder="nombre@ejemplo.com" maxlength="254" required>
+
+      <label for="mensaje">Mensaje</label>
+      <textarea id="mensaje" name="mensaje" rows="5"
+                placeholder="Escribe aquí tu mensaje…" maxlength="2000" required></textarea>
+
+      <button type="submit">Enviar mensaje</button>
+      <p class="nota">Los mensajes solo se muestran en esta página y se borran al recargar.</p>
+    </form>
+
+    <section aria-labelledby="tituloMensajes">
+      <div class="encabezado-mensajes">
+        <h2 id="tituloMensajes">Mensajes</h2>
+        <span id="contadorMensajes">0 mensajes</span>
+      </div>
+      <p id="estadoVacio" class="vacio">Todavía no hay mensajes. ¡Escribe el primero!</p>
+      <div id="contenedorMensajes"></div>
+      <p id="estado" class="estado" role="status" aria-live="polite"></p>
+    </section>
+    <noscript>Activa JavaScript en tu navegador para realizar la práctica.</noscript>
+  </main>
+</body>
+</html>
