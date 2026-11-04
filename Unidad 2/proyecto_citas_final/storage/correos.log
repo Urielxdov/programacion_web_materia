@@ -1,0 +1,107 @@
+[2026-11-03 05:37:47] (archivo) Para: urieledgar878@gmail.com | Asunto: Cita confirmada #2
+Hola Uriel Galvan,
+
+Tu cita ha sido confirmada.
+
+Folio:    #2
+Fecha:    2026-11-03
+Hora:     10:00
+Teléfono: 4775916986
+Motivo:   me duele la panza
+
+Clínica Médica
+------------------------------------------------------------
+[2026-11-03 05:41:00] (smtp ok) Para: urieledgar878@gmail.com | Asunto: Prueba clinica
+Correo de prueba del sistema de citas.
+------------------------------------------------------------
+[2026-11-03 05:41:24] (smtp ok) Para: urieledgar878@gmail.com | Asunto: Cita modificada #2
+Hola Uriel Galvan,
+
+Tu cita ha sido modificada. Estos son los nuevos datos.
+
+Folio:    #2
+Fecha:    2026-11-03
+Hora:     11:00
+Teléfono: 4775916986
+Motivo:   me duele la panza
+
+Clínica Médica
+------------------------------------------------------------
+[2026-11-03 05:44:20] (smtp ok) Para: t@t.com | Asunto: Cita confirmada #3
+Hola T,
+
+Tu cita ha sido confirmada.
+
+Folio:    #3
+Fecha:    2026-11-05
+Hora:     10:00
+Teléfono: 5512345678
+Motivo:   x
+
+Clínica Médica
+------------------------------------------------------------
+[2026-11-03 05:44:23] (smtp ok) Para: t@t.com | Asunto: Cita confirmada #4
+Hola T,
+
+Tu cita ha sido confirmada.
+
+Folio:    #4
+Fecha:    2026-11-05
+Hora:     10:30
+Teléfono: 5512345678
+Motivo:   x
+
+Clínica Médica
+------------------------------------------------------------
+[2026-11-03 05:44:33] (smtp ok) Para: t@t.com | Asunto: Cita modificada #4
+Hola T,
+
+Tu cita ha sido modificada. Estos son los nuevos datos.
+
+Folio:    #4
+Fecha:    2026-11-05
+Hora:     11:00
+Teléfono: 5512345678
+Motivo:   x
+
+Clínica Médica
+------------------------------------------------------------
+[2026-11-03 05:44:35] (smtp ok) Para: t@t.com | Asunto: Cita cancelada #3
+Hola T,
+
+Tu cita ha sido cancelada.
+
+Folio:    #3
+Fecha:    2026-11-05
+Hora:     10:00
+Teléfono: 5512345678
+Motivo:   x
+
+Clínica Médica
+------------------------------------------------------------
+[2026-11-03 05:44:37] (smtp ok) Para: t@t.com | Asunto: Cita modificada #4
+Hola T,
+
+Tu cita ha sido modificada. Estos son los nuevos datos.
+
+Folio:    #4
+Fecha:    2026-11-05
+Hora:     10:00
+Teléfono: 5512345678
+Motivo:   x
+
+Clínica Médica
+------------------------------------------------------------
+[2026-11-03 05:50:00] (smtp ok) Para: urieledgar878@gmail.com | Asunto: Cita modificada #2
+Hola Uriel Galvan,
+
+Tu cita ha sido modificada. Estos son los nuevos datos.
+
+Folio:    #2
+Fecha:    2026-11-03
+Hora:     11:05
+Teléfono: 4775916986
+Motivo:   me duele la panza
+
+Clínica Médica
+------------------------------------------------------------
