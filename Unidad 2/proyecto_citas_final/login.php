@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/lib.php';
-if (usuario()) redirect(usuario()['rol'] === 'admin' ? 'admin.php' : 'citas.php');
+if (usuario()) redirect('citas.php');
 
 $error = '';
 $correo = '';
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         session_regenerate_id(true);
         unset($u['password_hash']);
         $_SESSION['usuario'] = $u;
-        redirect($u['rol'] === 'admin' ? 'admin.php' : 'citas.php');
+        redirect('citas.php');
     }
     $error = 'Correo o contraseña incorrectos.';
 }
@@ -23,8 +23,9 @@ layout_ini('Iniciar sesión');
 ?>
 <div class="login">
     <h1>Iniciar sesión</h1>
+    <p class="centro">Sistema de citas · Consultorio del Dr. Xavier</p>
     <?php if ($error): ?><div class="mensaje error"><?= e($error) ?></div><?php endif; ?>
-    <form method="POST">
+    <form method="POST" style="margin-bottom:15px">
         <?= csrf_field() ?>
         <label>Correo:</label>
         <input type="email" name="correo" value="<?= e($correo) ?>" required>
@@ -32,6 +33,8 @@ layout_ini('Iniciar sesión');
         <input type="password" name="password" required>
         <button type="submit">Entrar</button>
     </form>
-    <div class="centro">¿No tienes cuenta? <a href="registro.php">Regístrate</a></div>
+    <div class="aviso">Cuentas de prueba (setup.php):<br>
+        <strong>Administrador:</strong> admin@clinica.local / admin123<br>
+        <strong>Asistente:</strong> asistente@clinica.local / asistente123</div>
 </div>
 <?php layout_fin();

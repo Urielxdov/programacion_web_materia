@@ -1,0 +1,10 @@
+# Apache (XAMPP / Docker): todo lo que no sea un archivo real va al Front Controller.
+Require all granted
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>

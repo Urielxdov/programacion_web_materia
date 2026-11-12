@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Efecto de imagen</title>
+    <style>
+        img {
+            /* La imagen ocupa todo el ancho de la ventana */
+            width: 100%;
+            /* Primer recorte con polígono (queda sobrescrito por circle, se deja por herencia de la guía) */
+            -webkit-clip-path: polygon(0 0, 100% 0, 50% 20%, 30% 80%);
+            clip-path: polygon(0 0, 100% 0, 50% 20%, 30% 80%);
+            /* Recorte final: círculo de 100px centrado a 150px del borde superior */
+            -webkit-clip-path: circle(100px at 50% 150px);
+            clip-path: circle(100px at 50% 150px);
+            /* Animación suave de 0.3s al cambiar el recorte */
+            transition: -webkit-clip-path .3s;
+            transition: clip-path .3s;
+            transition: clip-path .3s, -webkit-clip-path .3s;
+        }
+
+        img:hover {
+            /* Al pasar el mouse el círculo crece hasta mostrar toda la imagen */
+            -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            -webkit-clip-path: circle(800px at center);
+            clip-path: circle(800px at center);
+        }
+    </style>
+</head>
+<body>
+    <img src="img/stranger-things.jpg" alt="">
+</body>
+</html>

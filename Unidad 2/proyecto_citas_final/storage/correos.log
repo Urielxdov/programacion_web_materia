@@ -105,3 +105,42 @@ Motivo:   me duele la panza
 
 Clínica Médica
 ------------------------------------------------------------
+[2026-11-08 18:50:05] (smtp ok) Para: carlos@test.com | Asunto: Cita confirmada #1
+Hola Carlos Gómez,
+
+Su cita con el Dr. Xavier ha sido registrada.
+
+Folio:    #1
+Día:      09/11/2026
+Hora:     10:00
+CURP:     GOMC900515HDFRRR09
+Teléfono: 4771234567
+
+Consultorio del Dr. Xavier
+------------------------------------------------------------
+[2026-11-08 18:50:06] (smtp ok) Para: carlos@test.com | Asunto: Cita modificada #1
+Hola Carlos Gómez,
+
+Su cita con el Dr. Xavier ha sido modificada. Estos son los nuevos datos.
+
+Folio:    #1
+Día:      09/11/2026
+Hora:     11:30
+CURP:     GOMC900515HDFRRR09
+Teléfono: 4771234567
+
+Consultorio del Dr. Xavier
+------------------------------------------------------------
+[2026-11-08 18:50:08] (smtp ok) Para: carlos@test.com | Asunto: Cita cancelada #1
+Hola Carlos Gómez,
+
+Su cita con el Dr. Xavier ha sido cancelada.
+
+Folio:    #1
+Día:      09/11/2026
+Hora:     11:30
+CURP:     GOMC900515HDFRRR09
+Teléfono: 4771234567
+
+Consultorio del Dr. Xavier
+------------------------------------------------------------

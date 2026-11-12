@@ -2,6 +2,9 @@
 session_start();
 $CFG = require __DIR__ . '/config.php';
 
+const PAISES = ['México', 'Estados Unidos', 'Canadá', 'Guatemala', 'Colombia', 'Argentina', 'España', 'Otro'];
+const ROLES = ['admin' => 'Administrador', 'asistente' => 'Asistente'];
+
 function pdo(): PDO {
     global $CFG;
     static $pdo;
@@ -37,37 +40,74 @@ function csrf_check(): void {
     if (!hash_equals($_SESSION['csrf'] ?? '', $_POST['csrf'] ?? '')) { http_response_code(400); die('Token inválido.'); }
 }
 
+// ---------- Sesión y permisos ----------
 function usuario(): ?array { return $_SESSION['usuario'] ?? null; }
-function require_login(): array { return usuario() ?? redirect('login.php'); }
+function es_admin(): bool { return (usuario()['rol'] ?? '') === 'admin'; }
+function require_login(): array {
+    $u = usuario() ?? redirect('login.php');
+    // Releer de la BD para que un cambio de rol o una baja surta efecto de inmediato
+    $st = pdo()->prepare('SELECT id, nombre, correo, rol FROM usuarios WHERE id = ?');
+    $st->execute([$u['id']]);
+    if (!$fresco = $st->fetch()) { $_SESSION = []; redirect('login.php'); }
+    return $_SESSION['usuario'] = $fresco;
+}
 function require_admin(): array {
     $u = require_login();
-    if ($u['rol'] !== 'admin') redirect('citas.php');
+    if ($u['rol'] !== 'admin') {
+        flash('No tienes permiso para realizar esa acción (solo administrador).', 'error');
+        redirect('citas.php');
+    }
     return $u;
+}
+
+// ---------- Citas ----------
+const CAMPOS_CITA = ['fecha', 'hora', 'nombre', 'apellido', 'direccion', 'direccion2', 'ciudad', 'region',
+    'codigo_postal', 'pais', 'fecha_nacimiento', 'email', 'curp', 'telefono'];
+
+function fecha_valida(string $f): bool {
+    $d = DateTime::createFromFormat('Y-m-d', $f);
+    return $d && $d->format('Y-m-d') === $f;
 }
 
 function validar_cita(array $in, bool $esAdmin = false, ?int $excluirId = null): array {
     global $CFG;
-    $d = [
-        'paciente' => trim($in['paciente'] ?? ''),
-        'telefono' => trim($in['telefono'] ?? ''),
-        'correo' => trim($in['correo'] ?? ''),
-        'fecha' => trim($in['fecha'] ?? ''),
-        'hora' => trim($in['hora'] ?? ''),
-        'problema' => trim($in['problema'] ?? ''),
-    ];
+    $d = [];
+    foreach (CAMPOS_CITA as $k) $d[$k] = trim($in[$k] ?? '');
+    $d['curp'] = strtoupper($d['curp']);
+    $d['email'] = strtolower($d['email']);
+    $d['telefono'] = preg_replace('/[\s\-()]/', '', $d['telefono']);
+
     $err = [];
-    if ($d['paciente'] === '') $err[] = 'El nombre es obligatorio.';
-    if (!preg_match('/^[0-9+\-\s()]{7,20}$/', $d['telefono'])) $err[] = 'Ingresa un número de teléfono válido.';
-    if (!filter_var($d['correo'], FILTER_VALIDATE_EMAIL)) $err[] = 'Ingresa un correo válido.';
-    $f = DateTime::createFromFormat('Y-m-d', $d['fecha']);
-    if (!$f || $f->format('Y-m-d') !== $d['fecha']) $err[] = 'Fecha inválida.';
-    elseif ($d['fecha'] < date('Y-m-d') && !$esAdmin) $err[] = 'La fecha no puede ser anterior a hoy.';
-    if (!preg_match('/^([01]\d|2[0-3]):[0-5]\d$/', $d['hora'])) $err[] = 'Horario inválido.';
+    // Día y hora
+    if (!fecha_valida($d['fecha'])) $err[] = 'Día de la cita inválido.';
+    elseif ($d['fecha'] < date('Y-m-d') && !$esAdmin) $err[] = 'El día de la cita no puede ser anterior a hoy.';
+    $horaOk = preg_match('/^([01]\d|2[0-3]):[0-5]\d$/', $d['hora']);
+    if (!$horaOk) $err[] = 'Hora de la cita inválida.';
     else {
         $a = $CFG['agenda'];
-        if ($d['hora'] < $a['inicio'] || $d['hora'] > $a['ultima']) $err[] = "El horario de atención es de {$a['inicio']} a {$a['ultima']} (inicio de cita).";
+        if ($d['hora'] < $a['inicio'] || $d['hora'] > $a['ultima']) { $err[] = "El horario de atención es de {$a['inicio']} a {$a['ultima']} (inicio de cita)."; $horaOk = false; }
     }
-    if (!$err) {
+    // Datos personales
+    $soloLetras = '/^[\p{L}\s\'.-]{2,60}$/u';
+    if (!preg_match($soloLetras, $d['nombre'])) $err[] = 'Nombre inválido (solo letras).';
+    if (!preg_match($soloLetras, $d['apellido'])) $err[] = 'Apellido inválido (solo letras).';
+    if (mb_strlen($d['direccion']) < 5) $err[] = 'La dirección es obligatoria.';
+    if ($d['ciudad'] === '') $err[] = 'La ciudad es obligatoria.';
+    if ($d['region'] === '') $err[] = 'La región/estado es obligatoria.';
+    if (!in_array($d['pais'], PAISES, true)) $err[] = 'Selecciona un país.';
+    if ($d['pais'] === 'México' ? !preg_match('/^\d{5}$/', $d['codigo_postal']) : !preg_match('/^[A-Za-z0-9\s-]{3,10}$/', $d['codigo_postal']))
+        $err[] = 'Código postal inválido' . ($d['pais'] === 'México' ? ' (5 dígitos).' : '.');
+    if (!fecha_valida($d['fecha_nacimiento']) || $d['fecha_nacimiento'] > date('Y-m-d') || $d['fecha_nacimiento'] < '1900-01-01')
+        $err[] = 'Fecha de nacimiento inválida.';
+    // Campos agregados: email, CURP y teléfono
+    if (!filter_var($d['email'], FILTER_VALIDATE_EMAIL)) $err[] = 'Email inválido.';
+    if (!curp_valida($d['curp'])) $err[] = 'CURP inválida (18 caracteres, formato oficial).';
+    elseif (fecha_valida($d['fecha_nacimiento']) && substr($d['curp'], 4, 6) !== date('ymd', strtotime($d['fecha_nacimiento'])))
+        $err[] = 'La fecha de nacimiento no coincide con la CURP.';
+    if (!preg_match('/^\d{10}$/', $d['telefono'])) $err[] = 'El teléfono debe tener 10 dígitos.';
+
+    // Disponibilidad de horario
+    if (!$err && $horaOk) {
         $libre = primer_horario_libre($d['fecha'], $d['hora'], $excluirId);
         if ($libre !== $d['hora']) {
             $dur = $CFG['agenda']['duracion'];
@@ -76,7 +116,14 @@ function validar_cita(array $in, bool $esAdmin = false, ?int $excluirId = null):
                 : "El horario de las {$d['hora']} se encuentra reservado (las citas duran $dur minutos), pero puede reservar a partir de las $libre.";
         }
     }
+    if ($d['direccion2'] === '') $d['direccion2'] = null;
     return [$d, $err];
+}
+
+function curp_valida(string $c): bool {
+    return (bool)preg_match('/^[A-Z][AEIOUX][A-Z]{2}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[HMX]'
+        . '(AS|BC|BS|CC|CL|CM|CS|CH|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)'
+        . '[B-DF-HJ-NP-TV-Z]{3}[A-Z\d]\d$/', $c);
 }
 
 function a_minutos(string $h): int { [$hh, $mm] = explode(':', $h); return $hh * 60 + $mm; }
@@ -98,17 +145,20 @@ function primer_horario_libre(string $fecha, string $hora, ?int $excluirId = nul
     return $t > a_minutos($CFG['agenda']['ultima']) ? null : a_hora($t);
 }
 
-function crear_cita(array $d, ?int $usuarioId): int {
-    pdo()->prepare('INSERT INTO citas (usuario_id, paciente, telefono, correo, fecha, hora, problema) VALUES (?,?,?,?,?,?,?)')
-        ->execute([$usuarioId, $d['paciente'], $d['telefono'], $d['correo'], $d['fecha'], $d['hora'], $d['problema']]);
+function crear_cita(array $d, int $creadoPor): int {
+    $cols = implode(', ', CAMPOS_CITA);
+    $ph = implode(', ', array_fill(0, count(CAMPOS_CITA), '?'));
+    pdo()->prepare("INSERT INTO citas ($cols, creado_por) VALUES ($ph, ?)")
+        ->execute([...array_map(fn($k) => $d[$k], CAMPOS_CITA), $creadoPor]);
     $id = (int)pdo()->lastInsertId();
     correo_cita(obtener_cita($id), 'confirmada');
     return $id;
 }
 
 function modificar_cita(int $id, array $d): void {
-    pdo()->prepare('UPDATE citas SET paciente=?, telefono=?, correo=?, fecha=?, hora=?, problema=? WHERE id=?')
-        ->execute([$d['paciente'], $d['telefono'], $d['correo'], $d['fecha'], $d['hora'], $d['problema'], $id]);
+    $set = implode(', ', array_map(fn($k) => "$k = ?", CAMPOS_CITA));
+    pdo()->prepare("UPDATE citas SET $set WHERE id = ?")
+        ->execute([...array_map(fn($k) => $d[$k], CAMPOS_CITA), $id]);
     correo_cita(obtener_cita($id), 'modificada');
 }
 
@@ -117,26 +167,33 @@ function cancelar_cita(int $id): void {
     correo_cita(obtener_cita($id), 'cancelada');
 }
 
+function eliminar_cita(int $id): void {
+    pdo()->prepare('DELETE FROM citas WHERE id = ?')->execute([$id]);
+}
+
 function obtener_cita(int $id): ?array {
     $st = pdo()->prepare('SELECT * FROM citas WHERE id = ?');
     $st->execute([$id]);
     return $st->fetch() ?: null;
 }
 
+function fecha_mx(?string $f): string { return $f ? date('d/m/Y', strtotime($f)) : ''; }
+
 function correo_cita(array $c, string $accion): void {
     $titulos = ['confirmada' => 'Cita confirmada', 'modificada' => 'Cita modificada', 'cancelada' => 'Cita cancelada'];
     $intro = [
-        'confirmada' => 'Tu cita ha sido confirmada.',
-        'modificada' => 'Tu cita ha sido modificada. Estos son los nuevos datos.',
-        'cancelada' => 'Tu cita ha sido cancelada.',
+        'confirmada' => 'Su cita con el Dr. Xavier ha sido registrada.',
+        'modificada' => 'Su cita con el Dr. Xavier ha sido modificada. Estos son los nuevos datos.',
+        'cancelada' => 'Su cita con el Dr. Xavier ha sido cancelada.',
     ];
-    $cuerpo = "Hola {$c['paciente']},\n\n{$intro[$accion]}\n\n"
-        . "Folio:    #{$c['id']}\nFecha:    {$c['fecha']}\nHora:     {$c['hora']}\n"
-        . "Teléfono: {$c['telefono']}\nMotivo:   " . ($c['problema'] ?: '—') . "\n\nClínica Médica";
-    $ok = enviar_correo($c['correo'], $titulos[$accion] . " #{$c['id']}", $cuerpo);
+    $cuerpo = "Hola {$c['nombre']} {$c['apellido']},\n\n{$intro[$accion]}\n\n"
+        . "Folio:    #{$c['id']}\nDía:      " . fecha_mx($c['fecha']) . "\nHora:     {$c['hora']}\n"
+        . "CURP:     {$c['curp']}\nTeléfono: {$c['telefono']}\n\nConsultorio del Dr. Xavier";
+    $ok = enviar_correo($c['email'], $titulos[$accion] . " #{$c['id']}", $cuerpo);
     if (!$ok) flash('La cita se guardó, pero no se pudo enviar el correo (revisa storage/correos.log o la config SMTP).', 'error');
 }
 
+// ---------- Correo ----------
 function enviar_correo(string $to, string $asunto, string $cuerpo): bool {
     global $CFG;
     $m = $CFG['mail'];
@@ -195,15 +252,17 @@ function smtp_enviar(array $m, string $to, string $headers, string $body, string
     return $ok;
 }
 
+// ---------- Plantilla ----------
 function layout_ini(string $titulo): void {
     $u = usuario();
     $f = flash();
     echo '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">'
         . '<title>' . e($titulo) . '</title><link rel="stylesheet" href="style.css"></head><body><div class="contenedor">';
     if ($u) {
-        echo '<div class="barra"><span>' . e($u['nombre']) . ' <small>(' . e($u['rol']) . ')</small></span><span>';
-        if ($u['rol'] === 'admin') echo '<a href="admin.php">Panel admin</a> · ';
-        echo '<a href="citas.php">Mis citas</a> · <a href="logout.php">Salir</a></span></div>';
+        echo '<nav class="barra"><span>' . e($u['nombre']) . ' <small class="rol rol-' . e($u['rol']) . '">' . e(ROLES[$u['rol']]) . '</small></span><span>'
+            . '<a href="cita.php">Nueva cita</a> · <a href="citas.php">Consultar citas</a> · ';
+        if ($u['rol'] === 'admin') echo '<a href="usuarios.php">Usuarios</a> · ';
+        echo '<a href="logout.php">Salir</a></span></nav>';
     }
     if ($f) echo '<div class="mensaje ' . e($f[1]) . '">' . e($f[0]) . '</div>';
 }

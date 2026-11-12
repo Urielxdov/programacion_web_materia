@@ -1,0 +1,29 @@
+# Blueprint de Render (https://render.com/docs/blueprint-spec)
+# Uso: sube el CONTENIDO de esta carpeta a un repositorio de GitHub (raiz del repo),
+# en Render elige "New > Blueprint", conecta el repositorio y captura los valores secretos.
+# Si el proyecto vive en una subcarpeta del repo, descomenta rootDir con la ruta correcta.
+services:
+  - type: web
+    name: ewaste360
+    runtime: docker
+    plan: free
+    # rootDir: Unidad_2_remake/proyecto_final
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: TRUST_PROXY
+        value: "true"
+      - key: APP_TIMEZONE
+        value: America/Mexico_City
+      - key: APP_INSTITUCION
+        value: Instituto Tecnológico
+      # Cadena de conexion de Neon (Dashboard > Connection string, con ?sslmode=require)
+      - key: DATABASE_URL
+        sync: false
+      # Contrasena de las cuentas demo (admin, responsable, capturista) que se crean al primer arranque
+      - key: SEED_PASSWORD
+        sync: false

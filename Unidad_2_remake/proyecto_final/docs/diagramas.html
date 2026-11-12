@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagramas E-Waste 360°</title>
+<!-- Archivo generado a partir de docs/uml.md y docs/modelo-datos.md. Edita los .md y vuelve a generarlo. -->
+<style>
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f4f7f3; color: #1f2a24; margin: 0; padding: 24px; }
+  header { max-width: 1100px; margin: 0 auto 24px; }
+  h1 { color: #166534; margin: 0 0 6px; }
+  .tarjeta { max-width: 1100px; margin: 0 auto 24px; background: #fff; border: 1px solid #dfe7e1; border-radius: 14px; padding: 20px; overflow-x: auto; }
+  .cabecera { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  h2 { font-size: 1.1rem; margin: 0 0 12px; color: #0f3d22; }
+  button { background: #166534; color: #fff; border: 0; border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  @media print { button { display: none; } .tarjeta { break-inside: avoid; border: 0; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>E-Waste 360° — Diagramas UML y modelo de datos</h1>
+  <p>11 diagramas. Imprime esta página (Ctrl+P) para obtener un PDF o descarga cada diagrama como SVG.</p>
+</header>
+<section class="tarjeta" id="d1">
+  <div class="cabecera"><h2>1. Casos de uso</h2>
+    <button type="button" data-descargar="d1">Descargar SVG</button></div>
+  <pre class="mermaid">flowchart LR
+    V([👤 Visitante])
+    C([👤 Capturista])
+    R([👤 Responsable ambiental])
+    A([👤 Administrador])
+
+    R -. hereda .-&gt; C
+    A -. hereda .-&gt; R
+
+    subgraph Sitio publico
+        UC1([Consultar información ambiental])
+        UC2([Consultar campañas])
+        UC3([Registrar participación en campaña])
+    end
+
+    subgraph Panel privado
+        UC4([Iniciar / cerrar sesión])
+        UC5([Registrar equipo])
+        UC6([Buscar y consultar equipos])
+        UC7([Actualizar datos del equipo])
+        UC8([Registrar movimiento])
+        UC9([Diagnosticar equipo])
+        UC10([Validar o rechazar movimiento])
+        UC11([Administrar campañas])
+        UC12([Consultar indicadores y reportes])
+        UC13([Gestionar usuarios y roles])
+        UC14([Gestionar categorías y gestores])
+        UC15([Configurar política de clasificación])
+    end
+
+    V --- UC1 &amp; UC2 &amp; UC3
+    C --- UC4 &amp; UC5 &amp; UC6 &amp; UC7 &amp; UC8
+    R --- UC9 &amp; UC10 &amp; UC11 &amp; UC12
+    A --- UC13 &amp; UC14 &amp; UC15
+    UC9 -. include .-&gt; UC16([Obtener recomendación del sistema])
+    UC10 -. include .-&gt; UC17([Calcular ahorro estimado])</pre>
+</section>
+<section class="tarjeta" id="d2">
+  <div class="cabecera"><h2>2. Clases del dominio</h2>
+    <button type="button" data-descargar="d2">Descargar SVG</button></div>
+  <pre class="mermaid">classDiagram
+    direction TB
+
+    class Equipo {
+        &lt;&lt;abstract&gt;&gt;
+        -int id
+        -string codigo
+        -string marca
+        -string modelo
+        -int anioFabricacion
+        -string condicion
+        -string clasificacion
+        -string estado
+        -float pesoKg
+        +tipo()* string
+        +icono()* string
+        +requiereBorradoDatos() bool
+        +contieneMaterialesPeligrosos() bool
+        +recomendacionesEntrega() array
+        +puedeRecibir(tipoMovimiento) bool
+        +aplicarMovimiento(tipoMovimiento) void
+        +asignarClasificacion(clasificacion) void
+        +movimientosPermitidos() array
+        +antiguedadAnios(anioActual) int
+        +superaVidaUtil(factor, anioActual) bool
+        +generarCodigo(id, fechaIngreso)$ string
+        +toArray() array
+    }
+    class Categoria {
+        +int id
+        +string nombre
+        +string tipo
+        +int vidaUtilAnios
+        +nombreTipo() string
+    }
+    class Computadora {
+        +requiereBorradoDatos() bool
+    }
+    class Laptop {
+        +requiereBorradoDatos() bool
+        +contieneMaterialesPeligrosos() bool
+    }
+    class Celular {
+        +requiereBorradoDatos() bool
+        +contieneMaterialesPeligrosos() bool
+    }
+    class Monitor {
+        +contieneMaterialesPeligrosos() bool
+    }
+    class Impresora {
+        +contieneMaterialesPeligrosos() bool
+    }
+    class Bateria {
+        +contieneMaterialesPeligrosos() bool
+    }
+    class Periferico
+    class Accesorio
+    class EquipoGenerico
+
+    Equipo &lt;|-- Computadora
+    Equipo &lt;|-- Laptop
+    Equipo &lt;|-- Celular
+    Equipo &lt;|-- Monitor
+    Equipo &lt;|-- Impresora
+    Equipo &lt;|-- Bateria
+    Equipo &lt;|-- Periferico
+    Equipo &lt;|-- Accesorio
+    Equipo &lt;|-- EquipoGenerico
+    Equipo &quot;*&quot; --&gt; &quot;1&quot; Categoria : pertenece a
+
+    class EquipoFactory {
+        &lt;&lt;factory&gt;&gt;
+        +crear(Categoria, datos)$ Equipo
+        +desdeFila(fila)$ Equipo
+        +tiposSoportados()$ array
+    }
+    EquipoFactory ..&gt; Equipo : crea
+
+    class EstrategiaDestino {
+        &lt;&lt;interface&gt;&gt;
+        +decision() string
+        +aplica(Equipo, EvaluacionTecnica) bool
+        +justificacion(Equipo, EvaluacionTecnica) string
+    }
+    class EstrategiaReutilizacion {
+        -float factorVidaUtil
+    }
+    class EstrategiaConservacion
+    class EstrategiaReparacion {
+        -float umbralPorcentaje
+    }
+    class EstrategiaGestionEspecializada
+    EstrategiaReutilizacion ..|&gt; EstrategiaDestino
+    EstrategiaConservacion ..|&gt; EstrategiaDestino
+    EstrategiaReparacion ..|&gt; EstrategiaDestino
+    EstrategiaGestionEspecializada ..|&gt; EstrategiaDestino
+
+    class ClasificadorDestino {
+        -array estrategias
+        +politicaInstitucional(umbral, factor)$ ClasificadorDestino
+        +recomendar(Equipo, EvaluacionTecnica) Recomendacion
+    }
+    class EvaluacionTecnica {
+        +string estadoFuncional
+        +float costoReparacion
+        +float valorReemplazo
+        +bool riesgoSeguridad
+        +porcentajeCosto() float
+    }
+    class Recomendacion {
+        +string decision
+        +string justificacion
+        +string estrategia
+    }
+    ClasificadorDestino o-- &quot;1..*&quot; EstrategiaDestino : usa en orden
+    ClasificadorDestino ..&gt; EvaluacionTecnica
+    ClasificadorDestino ..&gt; Recomendacion : devuelve
+
+    class Diagnostico {
+        +int equipoId
+        +string estadoFuncional
+        +float costoReparacion
+        +float valorReemplazo
+        +string recomendacionSistema
+        +string decision
+        +clasificacionResultante() string
+        +siguioRecomendacion() bool
+        +ahorroPotencial() float
+    }
+    class Movimiento {
+        +int equipoId
+        +string tipo
+        +string estadoValidacion
+        +bool destinoVerificado
+        +float ahorroEstimado
+        +estaPendiente() bool
+    }
+    class Campana {
+        +string nombre
+        +string fechaInicio
+        +string fechaFin
+        +string estado
+        +aceptaParticipaciones() bool
+        +vigencia() string
+    }
+    class Participacion {
+        +string nombre
+        +int equiposComprometidos
+        +bool asistio
+        +correoOculto() string
+    }
+    class Gestor {
+        +string nombre
+        +bool verificado
+    }
+    class Usuario {
+        -string passwordHash
+        +string rol
+        +bool activo
+        +verificarPassword(password) bool
+        +estaBloqueado() bool
+        +hashear(password)$ string
+    }
+
+    Equipo &quot;1&quot; --&gt; &quot;*&quot; Diagnostico
+    Equipo &quot;1&quot; --&gt; &quot;*&quot; Movimiento
+    Movimiento &quot;*&quot; --&gt; &quot;0..1&quot; Gestor
+    Campana &quot;1&quot; --&gt; &quot;*&quot; Participacion
+    Equipo &quot;*&quot; --&gt; &quot;0..1&quot; Campana : recibido en</pre>
+</section>
+<section class="tarjeta" id="d3">
+  <div class="cabecera"><h2>3. Clases por capas</h2>
+    <button type="button" data-descargar="d3">Descargar SVG</button></div>
+  <pre class="mermaid">classDiagram
+    direction TB
+
+    class Aplicacion {
+        &lt;&lt;front controller&gt;&gt;
+        +ejecutar() void
+        +manejar(Request) Response
+    }
+    class Router {
+        +get(patron, accion, middlewares) void
+        +post(patron, accion, middlewares) void
+        +patch(patron, accion, middlewares) void
+        +despachar(Request) Response
+    }
+    class Middleware {
+        &lt;&lt;interface&gt;&gt;
+        +manejar(Request) Response
+    }
+    class Autenticado
+    class TienePermiso
+    class SoloInvitados
+    Autenticado ..|&gt; Middleware
+    TienePermiso ..|&gt; Middleware
+    SoloInvitados ..|&gt; Middleware
+    Aplicacion --&gt; Router
+    Router --&gt; Middleware
+
+    class Controller {
+        &lt;&lt;abstract&gt;&gt;
+        #vista() Response
+        #redirigir() Response
+        #json() Response
+    }
+    class EquipoController
+    class DiagnosticoController
+    class MovimientoController
+    class CampanaController
+    class EquipoApiController
+    class IndicadorApiController
+    EquipoController --|&gt; Controller
+    DiagnosticoController --|&gt; Controller
+    MovimientoController --|&gt; Controller
+    CampanaController --|&gt; Controller
+    EquipoApiController --|&gt; Controller
+    IndicadorApiController --|&gt; Controller
+    Router --&gt; Controller : invoca
+
+    class View {
+        +render(vista, datos, layout)$ string
+    }
+    Controller ..&gt; View
+
+    class EquipoService {
+        +buscar() array
+        +registrar() Equipo
+        +actualizar() Equipo
+        +historial() array
+    }
+    class DiagnosticoService {
+        +recomendar() Recomendacion
+        +registrar() Diagnostico
+    }
+    class MovimientoService {
+        +registrar() Movimiento
+        +validar() Movimiento
+        +rechazar() Movimiento
+    }
+    class CampanaService
+    class IndicadorService {
+        +generales() array
+        +campanas() array
+        +reutilizacion() array
+    }
+    class ConfiguracionService {
+        +clasificador() ClasificadorDestino
+    }
+    class Validator {
+        +validar(datos, reglas)$ array
+    }
+
+    EquipoController --&gt; EquipoService
+    EquipoApiController --&gt; EquipoService
+    DiagnosticoController --&gt; DiagnosticoService
+    MovimientoController --&gt; MovimientoService
+    CampanaController --&gt; CampanaService
+    IndicadorApiController --&gt; IndicadorService
+    DiagnosticoService --&gt; ConfiguracionService
+    EquipoService ..&gt; Validator
+    MovimientoService ..&gt; Validator
+
+    class Repositorio {
+        &lt;&lt;abstract&gt;&gt;
+        #Database db
+    }
+    class EquipoRepository {
+        +buscar() array
+        +porId() Equipo
+        +insertar() void
+        +actualizar() void
+    }
+    class DiagnosticoRepository
+    class MovimientoRepository
+    class CampanaRepository
+    class IndicadorRepository
+    EquipoRepository --|&gt; Repositorio
+    DiagnosticoRepository --|&gt; Repositorio
+    MovimientoRepository --|&gt; Repositorio
+    CampanaRepository --|&gt; Repositorio
+    IndicadorRepository --|&gt; Repositorio
+
+    EquipoService --&gt; EquipoRepository
+    DiagnosticoService --&gt; DiagnosticoRepository
+    MovimientoService --&gt; MovimientoRepository
+    CampanaService --&gt; CampanaRepository
+    IndicadorService --&gt; IndicadorRepository
+    EquipoRepository ..&gt; EquipoFactory
+
+    class Database {
+        &lt;&lt;singleton&gt;&gt;
+        -Database instancia$
+        +obtener()$ Database
+        +consultar(sql, parametros) array
+        +insertar(sql, parametros) int
+        +transaccion(operacion) mixed
+    }
+    Repositorio --&gt; Database</pre>
+</section>
+<section class="tarjeta" id="d4">
+  <div class="cabecera"><h2>4. Secuencia: iniciar sesión</h2>
+    <button type="button" data-descargar="d4">Descargar SVG</button></div>
+  <pre class="mermaid">sequenceDiagram
+    autonumber
+    actor U as Usuario
+    participant N as Navegador
+    participant FC as Aplicacion (Front Controller)
+    participant AC as AuthController
+    participant AS as AuthService
+    participant UR as UsuarioRepository
+    participant DB as Base de datos
+
+    U-&gt;&gt;N: Escribe usuario y contraseña
+    N-&gt;&gt;FC: POST /login (_token CSRF)
+    FC-&gt;&gt;FC: Verifica token CSRF
+    FC-&gt;&gt;AC: login(request)
+    AC-&gt;&gt;AS: autenticar(usuario, password)
+    AS-&gt;&gt;UR: porUsuario(usuario)
+    UR-&gt;&gt;DB: SELECT ... WHERE LOWER(usuario) = LOWER(?)
+    DB--&gt;&gt;UR: fila
+    UR--&gt;&gt;AS: Usuario
+    alt Cuenta bloqueada
+        AS--&gt;&gt;AC: HttpException 429
+    else Contraseña incorrecta
+        AS-&gt;&gt;UR: registrarIntentoFallido (bloqueo tras 5)
+        AS--&gt;&gt;AC: HttpException 401 (mensaje genérico)
+    else Correcta
+        AS-&gt;&gt;UR: registrarAcceso()
+        AS--&gt;&gt;AC: Usuario
+        AC-&gt;&gt;AC: Auth::iniciar() — session_regenerate_id + nuevo token CSRF
+    end
+    AC--&gt;&gt;N: 302 a /panel (o de vuelta a /login con el error)</pre>
+</section>
+<section class="tarjeta" id="d5">
+  <div class="cabecera"><h2>5. Secuencia: registrar un equipo</h2>
+    <button type="button" data-descargar="d5">Descargar SVG</button></div>
+  <pre class="mermaid">sequenceDiagram
+    autonumber
+    actor C as Capturista
+    participant FC as Aplicacion
+    participant MW as Middlewares (auth, permiso)
+    participant EC as EquipoController
+    participant ES as EquipoService
+    participant V as Validator
+    participant F as EquipoFactory
+    participant ER as EquipoRepository
+    participant MR as MovimientoRepository
+    participant DB as Base de datos
+
+    C-&gt;&gt;FC: POST /panel/equipos
+    FC-&gt;&gt;MW: auth + permiso:equipos.crear
+    MW--&gt;&gt;FC: OK
+    FC-&gt;&gt;EC: guardar(request)
+    EC-&gt;&gt;ES: registrar(datos, usuarioId, puedeClasificar=false)
+    ES-&gt;&gt;V: validar(datos, reglas)
+    V--&gt;&gt;ES: datos limpios (o ValidacionException 422)
+    ES-&gt;&gt;F: crear(categoria, datos)
+    F--&gt;&gt;ES: Laptop (subclase de Equipo)
+    ES-&gt;&gt;DB: BEGIN
+    ES-&gt;&gt;ER: insertar(equipo)
+    ER-&gt;&gt;DB: INSERT equipos / UPDATE codigo = EW-2026-0013
+    ES-&gt;&gt;MR: insertar(movimiento &quot;ingreso&quot; validado)
+    ES-&gt;&gt;DB: COMMIT
+    ES--&gt;&gt;EC: Equipo
+    EC--&gt;&gt;C: 302 a /panel/equipos/13 + mensaje de éxito</pre>
+</section>
+<section class="tarjeta" id="d6">
+  <div class="cabecera"><h2>6. Secuencia: diagnóstico con recomendación</h2>
+    <button type="button" data-descargar="d6">Descargar SVG</button></div>
+  <pre class="mermaid">sequenceDiagram
+    autonumber
+    actor R as Responsable ambiental
+    participant JS as panel.js (DOM)
+    participant API as EquipoApiController
+    participant DS as DiagnosticoService
+    participant CS as ConfiguracionService
+    participant CD as ClasificadorDestino
+    participant E as Estrategias
+
+    R-&gt;&gt;JS: Cambia estado funcional y costos
+    JS-&gt;&gt;API: GET /api/equipos/5/recomendacion?estado_funcional=...
+    API-&gt;&gt;DS: recomendar(5, datos)
+    DS-&gt;&gt;CS: clasificador()
+    CS--&gt;&gt;DS: ClasificadorDestino(umbral 60%, factor 1.5)
+    DS-&gt;&gt;CD: recomendar(equipo, evaluacion)
+    loop En orden de prioridad
+        CD-&gt;&gt;E: aplica(equipo, evaluacion)?
+    end
+    E--&gt;&gt;CD: EstrategiaReparacion aplica
+    CD--&gt;&gt;API: Recomendacion(reparar, justificación)
+    API--&gt;&gt;JS: 200 JSON
+    JS-&gt;&gt;JS: Pinta la recomendación y preselecciona la decisión
+    R-&gt;&gt;API: POST /panel/equipos/5/diagnostico (decisión + justificación)
+    Note over DS: Si la decisión difiere de la recomendación&lt;br/&gt;la justificación es obligatoria.&lt;br/&gt;Con riesgo de seguridad solo se permite&lt;br/&gt;gestión especializada.</pre>
+</section>
+<section class="tarjeta" id="d7">
+  <div class="cabecera"><h2>7. Secuencia: validar un movimiento</h2>
+    <button type="button" data-descargar="d7">Descargar SVG</button></div>
+  <pre class="mermaid">sequenceDiagram
+    autonumber
+    actor R as Responsable ambiental
+    participant MC as MovimientoController
+    participant MS as MovimientoService
+    participant MR as MovimientoRepository
+    participant EQ as Equipo
+    participant DR as DiagnosticoRepository
+    participant DB as Base de datos
+
+    R-&gt;&gt;MC: POST /panel/movimientos/8/validar
+    MC-&gt;&gt;MS: validar(8, responsableId)
+    MS-&gt;&gt;DB: BEGIN
+    MS-&gt;&gt;MR: porId(8) (debe estar pendiente)
+    MS-&gt;&gt;EQ: aplicarMovimiento(&quot;reparacion&quot;)
+    alt Transición no permitida
+        EQ--&gt;&gt;MS: DomainException
+        MS--&gt;&gt;MC: HttpException 409
+    else Permitida
+        EQ-&gt;&gt;EQ: estado = en_inventario, clasificación = funcional
+        MS-&gt;&gt;DR: ultimoDeEquipo() → valor de reemplazo
+        MS-&gt;&gt;MS: ahorro = valor de reemplazo − costo real
+        MS-&gt;&gt;DB: UPDATE equipos / UPDATE movimientos (validado, ahorro)
+        MS-&gt;&gt;DB: COMMIT
+    end
+    MC--&gt;&gt;R: 302 a /panel/movimientos + mensaje</pre>
+</section>
+<section class="tarjeta" id="d8">
+  <div class="cabecera"><h2>8. Estados del equipo</h2>
+    <button type="button" data-descargar="d8">Descargar SVG</button></div>
+  <pre class="mermaid">stateDiagram-v2
+    [*] --&gt; en_inventario : registro (movimiento de ingreso)
+    en_inventario --&gt; reasignado : reasignación validada
+    en_inventario --&gt; conservado : conservación validada
+    en_inventario --&gt; en_inventario : reparación validada
+    en_inventario --&gt; entregado_gestor : entrega validada
+    conservado --&gt; reasignado : reasignación
+    conservado --&gt; en_inventario : reparación
+    conservado --&gt; entregado_gestor : entrega
+    reasignado --&gt; reasignado : nueva reasignación
+    reasignado --&gt; conservado : conservación
+    reasignado --&gt; en_inventario : reparación
+    reasignado --&gt; entregado_gestor : entrega
+    entregado_gestor --&gt; [*]
+
+    note right of entregado_gestor
+        Estado final: el registro se cierra.
+        Cuenta como destino documentado solo
+        si el gestor está verificado.
+    end note</pre>
+</section>
+<section class="tarjeta" id="d9">
+  <div class="cabecera"><h2>9. Actividad: decisión de destino</h2>
+    <button type="button" data-descargar="d9">Descargar SVG</button></div>
+  <pre class="mermaid">flowchart TD
+    A([Inicio: diagnóstico]) --&gt; B{¿Riesgo de seguridad?}
+    B -- Sí --&gt; G[Gestión especializada]
+    B -- No --&gt; C{¿Funciona?}
+    C -- Sí --&gt; D{¿Antigüedad ≤ vida útil × factor?}
+    D -- Sí --&gt; R1[Reutilizar / reasignar]
+    D -- No --&gt; R2[Conservar como respaldo]
+    C -- No --&gt; E{¿Costo de reparar ≤ umbral % del valor nuevo?}
+    E -- Sí --&gt; R3[Reparar]
+    E -- No --&gt; G
+    R1 &amp; R2 &amp; R3 &amp; G --&gt; F[El responsable confirma o justifica otra decisión]
+    F --&gt; H([Fin: clasificación del equipo actualizada])</pre>
+</section>
+<section class="tarjeta" id="d10">
+  <div class="cabecera"><h2>10. Componentes y despliegue</h2>
+    <button type="button" data-descargar="d10">Descargar SVG</button></div>
+  <pre class="mermaid">flowchart LR
+    subgraph Cliente
+        B[Navegador&lt;br/&gt;HTML5 + Bootstrap 5 + JS]
+    end
+    subgraph CDN
+        J[jsDelivr: Bootstrap, Bootstrap Icons, Chart.js]
+        GF[Google Fonts]
+    end
+    subgraph Render[&quot;Render (Docker, HTTPS)&quot;]
+        AP[Apache + mod_rewrite]
+        subgraph App[&quot;PHP 8.3 — E-Waste 360°&quot;]
+            FC[public/index.php&lt;br/&gt;Front Controller]
+            CTRL[Controladores web y API]
+            SRV[Servicios + Strategy + Factory]
+            REPO[Repositorios]
+            VIEWS[Vistas PHP]
+        end
+    end
+    subgraph Neon[&quot;Neon (PostgreSQL administrado)&quot;]
+        PG[(ewaste360)]
+    end
+
+    B -- HTTPS --&gt; AP --&gt; FC --&gt; CTRL
+    CTRL --&gt; SRV --&gt; REPO
+    CTRL --&gt; VIEWS
+    REPO -- PDO + SSL --&gt; PG
+    B -. recursos estáticos .-&gt; J
+    B -. tipografías .-&gt; GF</pre>
+</section>
+<section class="tarjeta" id="d11">
+  <div class="cabecera"><h2>Diagrama entidad-relación</h2>
+    <button type="button" data-descargar="d11">Descargar SVG</button></div>
+  <pre class="mermaid">erDiagram
+    USUARIOS ||--o{ EQUIPOS : &quot;registra&quot;
+    USUARIOS ||--o{ DIAGNOSTICOS : &quot;elabora&quot;
+    USUARIOS ||--o{ MOVIMIENTOS : &quot;registra&quot;
+    USUARIOS |o--o{ MOVIMIENTOS : &quot;valida&quot;
+    USUARIOS ||--o{ CAMPANAS : &quot;crea&quot;
+    USUARIOS |o--o{ PARTICIPACIONES : &quot;puede participar&quot;
+    CATEGORIAS ||--o{ EQUIPOS : &quot;clasifica&quot;
+    CAMPANAS |o--o{ EQUIPOS : &quot;recibe&quot;
+    CAMPANAS ||--o{ PARTICIPACIONES : &quot;tiene&quot;
+    EQUIPOS ||--o{ DIAGNOSTICOS : &quot;tiene&quot;
+    EQUIPOS ||--o{ MOVIMIENTOS : &quot;historial&quot;
+    GESTORES |o--o{ MOVIMIENTOS : &quot;recibe entregas&quot;
+
+    USUARIOS {
+        int id PK
+        varchar nombre
+        varchar usuario UK
+        varchar email UK
+        varchar password_hash
+        varchar rol &quot;capturista | responsable | admin&quot;
+        smallint activo
+        int intentos_fallidos
+        timestamp bloqueado_hasta
+        timestamp ultimo_acceso
+    }
+    CATEGORIAS {
+        int id PK
+        varchar nombre UK
+        varchar tipo &quot;decide la subclase (Factory)&quot;
+        smallint vida_util_anios
+        varchar descripcion
+        smallint activo
+    }
+    EQUIPOS {
+        int id PK
+        varchar codigo UK &quot;EW-AAAA-NNNN&quot;
+        int categoria_id FK
+        varchar marca
+        varchar modelo
+        varchar numero_serie
+        smallint anio_fabricacion
+        date fecha_ingreso
+        varchar condicion
+        varchar clasificacion
+        varchar estado
+        decimal peso_kg
+        varchar ubicacion
+        int campana_id FK
+        int registrado_por FK
+    }
+    DIAGNOSTICOS {
+        int id PK
+        int equipo_id FK
+        text descripcion
+        varchar estado_funcional
+        decimal costo_reparacion
+        decimal valor_reemplazo
+        smallint riesgo_seguridad
+        varchar recomendacion_sistema
+        varchar decision
+        text justificacion
+        date fecha
+        int responsable_id FK
+    }
+    MOVIMIENTOS {
+        int id PK
+        int equipo_id FK
+        varchar tipo
+        date fecha
+        varchar destino
+        int gestor_id FK
+        decimal costo
+        decimal ahorro_estimado
+        varchar evidencia
+        smallint datos_borrados
+        smallint destino_verificado
+        varchar estado_validacion
+        int registrado_por FK
+        int validado_por FK
+        timestamp validado_en
+    }
+    GESTORES {
+        int id PK
+        varchar nombre
+        varchar tipo
+        varchar contacto
+        varchar numero_autorizacion
+        smallint verificado
+        smallint activo
+    }
+    CAMPANAS {
+        int id PK
+        varchar nombre
+        text descripcion
+        date fecha_inicio
+        date fecha_fin
+        varchar ubicacion
+        varchar tipos_aceptados
+        int meta_equipos
+        varchar estado
+        int creado_por FK
+    }
+    PARTICIPACIONES {
+        int id PK
+        int campana_id FK
+        int usuario_id FK
+        varchar nombre
+        varchar correo
+        int equipos_comprometidos
+        varchar tipos_equipo
+        smallint asistio
+        timestamp fecha_registro
+    }
+    CONFIGURACION {
+        varchar clave PK
+        varchar valor
+        varchar descripcion
+    }</pre>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#dcfce7', primaryBorderColor: '#166534', lineColor: '#0f766e', fontFamily: 'Segoe UI, sans-serif' } });
+  document.addEventListener('click', (e) => {
+    const id = e.target.dataset.descargar;
+    if (!id) return;
+    const svg = document.querySelector('#' + id + ' svg');
+    if (!svg) return;
+    const blob = new Blob([svg.outerHTML], { type: 'image/svg+xml' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = id + '.svg';
+    a.click();
+  });
+</script>
+</body>
+</html>

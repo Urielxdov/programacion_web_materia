@@ -1,0 +1,3 @@
+# Si el proyecto se copia completo a htdocs, nadie debe poder leer app/, config/, database/ ni .env.
+# Solo la carpeta public/ es accesible (tiene su propio .htaccess con "Require all granted").
+Require all denied

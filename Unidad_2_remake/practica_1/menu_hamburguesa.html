@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Menú Hamburguesa</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Checkbox oculto: es el "interruptor" del menú (checkbox hack) */
+        #btn-menu{
+            display: none;
+        }
+
+        /* Botón hamburguesa (label del checkbox); oculto en pantallas grandes */
+        .hamburguesa{
+            display: none;
+            background-color: black;
+            color: white;
+            font-size: 32px;
+            padding: 10px 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #menu{
+            background-color: black;
+        }
+
+        #menu ul{
+            list-style: none;
+            margin: 0;
+            padding: 20px 30px;
+            display: flex;
+        }
+
+        #menu li a{
+            display: block;
+            color: white;
+            padding: 20px 30px;
+            text-decoration: none;
+        }
+
+        #menu li a:hover{
+            background-color: cornflowerblue;
+            color: white;
+        }
+
+        /* Pantallas pequeñas (< 768px): aparece la hamburguesa y se oculta el menú */
+        @media screen and (max-width: 768px){
+            .hamburguesa{
+                display: block;
+            }
+            #menu ul{
+                display: none;
+                flex-direction: column;
+                padding: 0;
+            }
+            #menu li a{
+                text-align: center;
+                border-top: 1px solid #333;
+            }
+            /* Si el checkbox está marcado, se muestra el menú vertical */
+            #btn-menu:checked ~ #menu ul{
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <input type="checkbox" id="btn-menu">
+    <label for="btn-menu" class="hamburguesa">&#9776;</label>
+
+    <nav id="menu">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Servicios</a></li>
+            <li><a href="#">Portafolio</a></li>
+            <li><a href="#">Videos</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+    </nav>
+</body>
+</html>
