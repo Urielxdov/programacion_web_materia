@@ -16,15 +16,15 @@ Abre <http://localhost:8000>. También puedes usar Apache/XAMPP y abrir la carpe
 
 | Archivo | Práctica | Páginas indicadas |
 | --- | --- | --- |
-| formularios.php | Captura con POST, validación, selección múltiple y análisis | 27–36 |
-| proteccion.php | Contraseña, sesión, contenido restringido y cierre de sesión | 37–39 |
-| opinion.php | Formulario de opinión y preparación/envío de correo | 44–48 |
+| formularios.php | Botones de opción Sr./Sra., texto, lista, casillas y comentario con `nl2br`; validación y análisis | 27–36 |
+| proteccion.php | Dos contraseñas (`if/elseif` y `switch`), dos secciones protegidas, sesión y cierre de sesión | 37–39 |
+| opinion.php | Mailer de opinión y formmailer universal (`foreach` sobre `$_POST`) | 44–48 |
 | contador.php | Contador persistente de cargas de la página | 49–51 |
-| visitas.php | Firmar y consultar el libro de visitas | 52–58 |
+| visitas.php | Libro con nombre, e-mail, IP, protección contra recarga y saludo según la hora | 52–58 |
 | encuesta.php | Votos persistentes y gráfica rojo, amarillo, morado y azul cielo | 62–66 |
 | rss.php | Lectura de un canal RSS local o BBC Mundo | 67–72 |
 
-La contraseña de demostración es **unidad2**. Para cambiarla genera un hash con `php -r "echo password_hash('tu-clave', PASSWORD_DEFAULT);"` y establece `UNIDAD2_PASSWORD_HASH` antes de iniciar el servidor. Es un ejercicio local; el acceso no tiene recuperación de contraseña ni limitación de intentos.
+Las contraseñas de demostración son **unidad2** (sección 1) y **practica2** (sección 2). Para cambiarlas genera un hash con `php -r "echo password_hash('tu-clave', PASSWORD_DEFAULT);"` y establece `UNIDAD2_PASSWORD_HASH` y `UNIDAD2_PASSWORD_HASH_2` antes de iniciar el servidor. Es un ejercicio local; el acceso no tiene recuperación de contraseña ni limitación de intentos.
 
 Los datos se guardan como JSON dentro de archivos PHP que comienzan con `<?php exit; ?>`, para no mostrarlos si se solicitan por HTTP a un servidor PHP. Apache también bloquea `data` con `.htaccess`. No sirvas esta carpeta con un servidor estático. Puedes situar los datos fuera de la carpeta pública mediante `UNIDAD2_DATA_DIR`. El contador aumenta con cada carga; la encuesta permite un voto por sesión, sin identificar personas.
 
@@ -39,6 +39,18 @@ $env:UNIDAD2_MAIL_FROM = 'remitente@tu-dominio.com'
 php -S localhost:8000
 ```
 
+### Modo `smtp` (recomendado)
+
+`includes/smtp.php` es un cliente SMTP propio (STARTTLS o SSL, autenticación LOGIN) que no depende de `php.ini` ni de Composer. Copia `.env.example` a `.env` (ignorado por Git), completa los valores y exporta las variables antes de iniciar el servidor, o pásalas a Docker con `--env-file .env`:
+
+```powershell
+docker run -d --name practicas_php -p 8000:8000 --env-file .env -v "${PWD}:/app" -w /app php:8.2-cli php -S 0.0.0.0:8000
+```
+
+Variables: `UNIDAD2_MAIL_MODE=smtp`, `UNIDAD2_MAIL_TO`, `UNIDAD2_MAIL_FROM`, `UNIDAD2_SMTP_HOST`, `UNIDAD2_SMTP_PORT`, `UNIDAD2_SMTP_SECURE` (`tls` para 587, `ssl` para 465), `UNIDAD2_SMTP_USER` y `UNIDAD2_SMTP_PASS`. Con Gmail o Outlook con verificación en dos pasos se necesita una contraseña de aplicación.
+
+### Modo `mail`
+
 Configura además el transporte de `mail()` en `php.ini`: en Windows, `SMTP`, `smtp_port` y `sendmail_from` para un relay compatible, o `sendmail_path` para un transporte instalado. `mail()` no proporciona por sí solo autenticación SMTP moderna. Usa un transporte local que gestione TLS/autenticación si tu proveedor lo requiere. No guardes credenciales en el repositorio. Que `mail()` devuelva éxito indica aceptación por el transporte, no entrega en la bandeja del destinatario.
 
 ## RSS y evidencia
@@ -49,4 +61,4 @@ Para la entrega abre `rss.php` en un navegador y captura su ejecución. La evide
 
 ## Relación con el libro
 
-El PDF proporcionado `PC_Cuadernos_28_-_PHP_5.pdf` contiene datos binarios dañados y no fue posible leer sus páginas. Por ello los ejercicios siguen los siete títulos y rangos de páginas de la consigna; no se afirma que reproduzcan los ejemplos exactos del libro. Se necesita una copia legible para cotejar nombres de campos y detalles con el original.
+Cada práctica sigue el capítulo del cuaderno `PC_Cuadernos_28_-_PHP_5.pdf` que indica la consigna. Las diferencias son de seguridad: contraseñas guardadas como hash, salida escapada con `htmlspecialchars`, token CSRF en los formularios, datos con bloqueo de archivo y sesión en lugar de cookies sueltas para la encuesta.

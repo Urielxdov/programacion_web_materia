@@ -3,11 +3,11 @@ declare(strict_types=1);
 session_start();
 date_default_timezone_set('America/Mexico_City');
 const PRACTICAS = [
-    'formularios.php' => ['Creación y análisis de formularios', '27–36', 'Captura y validación de datos mediante POST.'],
-    'proteccion.php' => ['Protección con contraseña', '37–39', 'Acceso a contenido privado mediante una sesión.'],
-    'opinion.php' => ['Formulario de opinión', '44–48', 'Validación y preparación de un correo electrónico.'],
+    'formularios.php' => ['Creación y análisis de formularios', '27–36', 'Captura con botones de opción, texto y comentario; validación y análisis de los datos recibidos por POST.'],
+    'proteccion.php' => ['Protección con contraseña', '37–39', 'Dos contraseñas dan acceso a dos secciones distintas mediante una sesión.'],
+    'opinion.php' => ['Formulario de opinión', '44–48', 'Mailer de opinión y formmailer universal con validación y envío de correo.'],
     'contador.php' => ['Contador de visitas', '49–51', 'Un contador persistente almacenado en un archivo.'],
-    'visitas.php' => ['Libro de visitas', '52–58', 'Publica un mensaje y consulta las firmas anteriores.'],
+    'visitas.php' => ['Libro de visitas', '52–58', 'Publica un mensaje con tu e-mail y consulta las firmas anteriores.'],
     'encuesta.php' => ['Encuesta web', '62–66', 'Vota y consulta una gráfica con los cuatro colores solicitados.'],
     'rss.php' => ['Lector de hilos RSS', '67–72', 'Lee un documento XML y presenta sus noticias.'],
 ];

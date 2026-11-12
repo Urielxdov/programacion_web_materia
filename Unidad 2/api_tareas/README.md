@@ -7,9 +7,8 @@ config/          configuración del proyecto (settings, urls)
 tasks/           app: modelo, serializer, vista, tests, frontend (templates/index.html)
 clientes/        cliente.py (requests)
 build.sh         build de Render
-Dockerfile       imagen de producción (Gunicorn); docker-compose.yml para desarrollo
-release.sh       migraciones + usuario demo (Cloud Run Job)
-DEPLOY_GCP.md    guía de despliegue en Google Cloud Run + Cloud SQL
+Dockerfile       imagen de la API; docker-compose.yml la levanta junto con PostgreSQL
+start.sh         arranque del contenedor en producción (migrate + Gunicorn)
 render.yaml      blueprint de Render
 ```
 
@@ -122,13 +121,11 @@ Mismo código; solo cambian las variables de entorno:
 1. Sube el repositorio a GitHub.
 2. En Render: **New → Blueprint** (usa `render.yaml`) o **New → Web Service** con:
    - Root Directory: `Unidad 2/api_tareas` (si el repo es el de toda la materia)
-   - Build Command: `./build.sh`
+   - Build Command: `bash build.sh`
    - Start Command: `gunicorn config.wsgi:application`
-3. Variables de entorno: `DEBUG=False`, `SECRET_KEY` (generada), `DEMO_USER`, `DEMO_PASSWORD` (escríbela en el panel), y opcionalmente `DATABASE_URL`, `ALLOWED_HOSTS`, `CORS_ALLOWED_ORIGINS`. `RENDER_EXTERNAL_HOSTNAME` lo define Render y se agrega solo a `ALLOWED_HOSTS`.
-4. Cuando termine el deploy, prueba con la URL pública: `python clientes/cliente.py https://TU-APP.onrender.com`.
+   - Si Render detecta el `Dockerfile` (runtime **Docker**), no usa Build/Start Command: el contenedor ejecuta `start.sh` (migraciones, usuario demo y Gunicorn).
+3. Base de datos: con Blueprint se crea sola. Con Web Service manual, crea antes **New → PostgreSQL** y copia su *Internal Database URL* en `DATABASE_URL` (obligatoria: el proyecto ya no usa SQLite).
+4. Variables de entorno: `DEBUG=False`, `SECRET_KEY` (generada), `DATABASE_URL`, `DEMO_USER`, `DEMO_PASSWORD` (escríbela en el panel), y opcionalmente `ALLOWED_HOSTS`, `CORS_ALLOWED_ORIGINS`. `RENDER_EXTERNAL_HOSTNAME` lo define Render y se agrega solo a `ALLOWED_HOSTS`.
+5. Cuando termine el deploy, prueba con la URL pública: `python clientes/cliente.py https://TU-APP.onrender.com`.
 
-Estado: la configuración está preparada pero **el despliegue en Render no se ha probado**; el proyecto se verificó únicamente en localhost (tests y solicitudes reales). Gunicorn no corre en Windows, por lo que tampoco se probó localmente.
-
-## 7. Despliegue en Google Cloud
-
-Cloud Run + Cloud SQL (PostgreSQL). Pasos completos en [DEPLOY_GCP.md](DEPLOY_GCP.md). La imagen de producción se probó localmente (Gunicorn, migraciones, HTTPS, estáticos); el despliegue en Google Cloud no se ha probado.
+Estado: la configuración está preparada pero **el despliegue en Render no se ha probado**. En localhost se verificó con Docker y PostgreSQL (tests, solicitudes reales y Gunicorn dentro del contenedor).
