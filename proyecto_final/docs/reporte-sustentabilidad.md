@@ -1,39 +1,52 @@
-# Reporte técnico: contribución a la sustentabilidad
+﻿# E-Waste 360°
 
-## Problema
+## Reporte técnico de Desarrollo Sustentable
 
-La institución acumula computadoras, monitores, impresoras, celulares, cables y baterías sin saber cuántos hay, en
-qué estado están ni cuál fue su destino. Esto provoca que equipos aprovechables se conviertan prematuramente en
-residuos, eleva los costos de almacenamiento y reposición y crea el riesgo de entregar residuos peligrosos a
-destinos no adecuados.
+**Gestión de equipos electrónicos fuera de uso en una institución educativa**
 
-## Cómo responde E-Waste 360° a cada criterio de Desarrollo Sustentable
-
-| Criterio (sección 12 del proyecto) | Respuesta de la plataforma |
+| Dato | Información |
 |---|---|
-| Identificar equipos que pueden repararse o reutilizarse **antes** de considerarlos residuos | Todo equipo entra como *pendiente* y pasa por un diagnóstico. La estrategia de clasificación prioriza la reutilización y la reparación cuando cuesta menos del 50 % de un equipo nuevo. La entrega a un gestor solo se permite para equipos en *gestión especializada*. |
-| Historial verificable de movimientos y destinos | La tabla `movimientos` es de solo inserción. Cada cambio de estado se registra en la misma transacción, con responsable, fecha, estado anterior y nuevo, y evidencia documental (oficio o manifiesto). |
-| Organización de campañas de recolección y educación ambiental | Módulo de campañas con página pública, registro de participación, tipos aceptados, recomendaciones de entrega segura y resultados por campaña. La guía pública enseña a cuidar, reparar y entregar. |
-| Indicadores de desempeño | Equipos recuperados, tasa de éxito de reparaciones, tasa de reutilización, ahorro económico estimado, kg de residuo evitado, kg entregados a gestores, participación y serie mensual. Se pueden imprimir o descargar en CSV. |
-| Consumo responsable y prolongación de la vida útil | Guía "Cuida tus equipos", reasignación documentada a otras áreas y conservación de equipos de respaldo. |
-| No presentar como recuperados equipos sin destino documentado | Los indicadores solo cuentan como entregados los equipos con movimiento `ENTREGA_GESTOR`, gestor verificado y evidencia. Un gestor sin autorización documentada no puede recibir equipos. |
-| Seguridad, protección de datos y accesibilidad | Borrado seguro de datos obligatorio antes de reasignar o entregar computadoras y móviles; recolección mínima de datos personales; diseño accesible (letra legible, tamaño ajustable, alto contraste, navegación por teclado, áreas de toque grandes). |
+| Proyecto | E-Waste 360° |
+| Asignaturas vinculadas | Programación Web y Desarrollo Sustentable |
+| Periodo académico | Agosto–diciembre de 2026 |
+| Versión del reporte | 1.0 |
+| Fecha de elaboración y corte documental | 25 de noviembre de 2026 |
+| Base de revisión | Código, enunciado y evidencias de la carpeta `proyecto_final` |
+| Contexto institucional | Caso académico; no se identificó una institución de campo con diagnóstico medido |
 
-## Dimensiones de la sustentabilidad
+Este reporte analiza la contribución ambiental, social y económica de la solución y contrasta su implementación con la sección 12 del proyecto académico. Cada apartado está desarrollado en un archivo Markdown independiente.
 
-- **Ambiental:** menos residuos gracias a la reparación y la reutilización, manejo adecuado de baterías y componentes
-  peligrosos, y trazabilidad hasta gestores autorizados. El indicador *kg de residuo evitado* usa el peso promedio
-  de cada categoría.
-- **Social:** campañas abiertas a la comunidad, reasignación de equipos a laboratorios, bibliotecas o escuelas
-  comunitarias, educación ambiental y una interfaz pensada para personas mayores.
-- **Económica:** el *ahorro estimado* compara el valor de reposición de cada equipo recuperado con el costo real de
-  repararlo, lo que permite justificar la inversión en mantenimiento frente a la compra de equipo nuevo.
+## Índice
 
-## Limitaciones y trabajo futuro
+1. [Introducción](reporte-sustentabilidad/01-introduccion.md)
+2. [La problemática de los RAEE](reporte-sustentabilidad/02-problematica-raee.md)
+3. [Marco de referencia](reporte-sustentabilidad/03-marco-referencia.md)
+4. [Descripción de la solución desde la perspectiva sustentable](reporte-sustentabilidad/04-descripcion-solucion.md)
+5. [Contribución por dimensión](reporte-sustentabilidad/05-contribucion-dimensiones.md)
+6. [Cumplimiento de los criterios de la sección 12](reporte-sustentabilidad/06-cumplimiento-seccion-12.md)
+7. [Indicadores: definiciones, fórmulas, cálculo y ejemplos](reporte-sustentabilidad/07-indicadores.md)
+8. [Responsabilidad y ética](reporte-sustentabilidad/08-responsabilidad-etica.md)
+9. [Limitaciones y mejoras futuras](reporte-sustentabilidad/09-limitaciones-mejoras.md)
+10. [Conclusiones](reporte-sustentabilidad/10-conclusiones.md)
 
-- El peso y el valor de reposición son promedios por categoría que define el administrador; los indicadores son
-  estimaciones, no mediciones.
-- La verificación de gestores depende de que el personal revise el documento de autorización. El sistema registra
-  quién lo verificó y cuándo, pero no consulta padrones oficiales.
-- Se podrían agregar la carga de archivos de evidencia (fotos y manifiestos en PDF) y el cálculo de emisiones
-  evitadas con factores de una fuente oficial.
+## Criterios de lectura y alcance
+
+- Los beneficios esperados se distinguen de los resultados institucionales efectivamente medidos.
+- Los ejemplos del apartado 7 provienen de registros de pruebas y no representan impactos ambientales reales.
+- La revisión normativa incluye la LGPGIR reformada el 19 de enero de 2026, la NOM-161-SEMARNAT-2011 y sus modificaciones, la NOM-052-SEMARNAT-2005 y la Ley General de Economía Circular de 2026. Las fuentes oficiales se enlazan junto a las afirmaciones.
+- El criterio relativo a no declarar recuperación sin destino documentado se califica como **parcial** por la definición actual del indicador de recuperados.
+- El apartado 6 incorpora cuatro reportes visuales existentes y detalla siete tomas de interfaz pendientes. Esos reportes no se presentan como capturas del navegador. La preparación de una ejecución local encontró dependencias no disponibles; no se generó evidencia de interfaz simulada.
+- Este documento no acredita cumplimiento normativo, certificación de accesibilidad ni reciclaje final comprobado.
+
+## Referencias principales
+
+Las referencias y fuentes internas completas están distribuidas en los apartados correspondientes. Para consulta general:
+
+- [UIT y UNITAR: Global E-waste Monitor 2024](https://www.itu.int/en/ITU-D/Environment/Pages/Publications/The-Global-E-Waste-Monitor-2024.aspx).
+- [OMS: desechos eléctricos y electrónicos](https://www.who.int/es/news-room/fact-sheets/detail/electronic-waste-(e-waste)).
+- [Naciones Unidas: Agenda 2030](https://sdgs.un.org/2030agenda).
+- [Cámara de Diputados: LGPGIR](https://www.diputados.gob.mx/LeyesBiblio/pdf/LGPGIR.pdf).
+- [DOF: NOM-161-SEMARNAT-2011](https://sidof.segob.gob.mx/notas/docFuente/5286505).
+- [PROFEPA: NOM-161 y modificaciones](https://www.gob.mx/profepa/documentos/norma-oficial-mexicana-nom-161-semarnat-2011).
+- [Secretaría de Economía: NOM-052-SEMARNAT-2005](https://platiica.economia.gob.mx/normalizacion/nom-052-semarnat-2005/).
+- [Cámara de Diputados: Ley General de Economía Circular](https://www.diputados.gob.mx/LeyesBiblio/pdf/LGEC.pdf).
