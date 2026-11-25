@@ -1,0 +1,95 @@
+# Levanta MySQL + proyecto_individual (menu y citas) + proyecto_final (E-Waste 360) con:
+#   docker compose up -d --build
+#
+#   http://localhost:8080/PresentacionActividades.html   menu con frames + CRUD de citas
+#   http://localhost:8000                                E-Waste 360 (admin / responsable / capturista)
+#   localhost:3307                                       MySQL (root, sin contrasena)
+#
+#   http://localhost:8081                                phpMyAdmin (root, sin contrasena)
+#   http://localhost:8025                                Mailpit (correos de equipo_1 / correos_php)
+# equipo_4 tiene su propio compose: cd equipo_4 && docker compose up -d --build  (http://localhost:8001)
+name: unidad2
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: ewaste360
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysqldata:/var/lib/mysql
+      # Se ejecuta solo la primera vez: crea sistema_citas con usuarios y citas
+      - ./proyecto_individual/schema.sql:/docker-entrypoint-initdb.d/10-sistema_citas.sql:ro
+      - ./equipo_2/clinica_medica.txt:/docker-entrypoint-initdb.d/20-clinica_medica.sql:ro
+      - ./proyecto_citas_final/schema.sql:/docker-entrypoint-initdb.d/30-clinica_citas.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  citas:
+    build:
+      dockerfile_inline: |
+        FROM php:8.3-cli
+        RUN docker-php-ext-install pdo_mysql \
+            && apt-get update && apt-get install -y --no-install-recommends msmtp msmtp-mta ca-certificates \
+            && rm -rf /var/lib/apt/lists/*
+    working_dir: /app
+    # start.sh genera /etc/msmtprc (Gmail si hay credenciales en practicas_php/.env, si no Mailpit)
+    env_file:
+      - path: ./practicas_php/.env
+        required: false
+    command: sh /app/equipo_1/start.sh
+    volumes:
+      - .:/app
+    environment:
+      CITAS_DB_HOST: mysql
+      CITAS_DB_PORT: "3306"
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  ewaste:
+    build: ./proyecto_final
+    environment:
+      PORT: "80"
+      APP_ENV: local
+      APP_DEBUG: "true"
+      DB_DRIVER: mysql
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_NAME: ewaste360
+      DB_USER: root
+      DB_PASSWORD: ""
+      SEED_PASSWORD: ${SEED_PASSWORD:-Demo2026x}
+    ports:
+      - "8000:80"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "8025:8025"   # bandeja web
+      - "1025:1025"   # SMTP
+
+  phpmyadmin:
+    image: phpmyadmin:5
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: ""
+      PMA_ARBITRARY: "0"
+    ports:
+      - "8081:80"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysqldata:

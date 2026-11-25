@@ -30,7 +30,7 @@ services:
     volumes:
       - .:/app         # recarga automática al editar el código
     ports:
-      - "8000:8000"
+      - "8001:8000"   # 8001 para no chocar con E-Waste 360 (8000)
     depends_on:
       db:
         condition: service_healthy

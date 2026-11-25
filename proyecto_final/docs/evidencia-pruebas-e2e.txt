@@ -1,0 +1,26 @@
+Pruebas e2e de los servicios web (npm run test:e2e)
+Fecha: 2026-11-23 21:39
+
+/test/servicios-web.e2e-spec.ts
+  [OK] Autenticación, sesiones y CSRF > rechaza rutas privadas sin sesión (401)
+  [OK] Autenticación, sesiones y CSRF > rechaza peticiones de escritura sin token CSRF (403)
+  [OK] Autenticación, sesiones y CSRF > rechaza credenciales incorrectas con un mensaje genérico
+  [OK] Autenticación, sesiones y CSRF > la cookie de sesión es HttpOnly
+  [OK] Autenticación, sesiones y CSRF > una cuenta desactivada pierde el acceso aunque tenga sesión abierta
+  [OK] Autenticación, sesiones y CSRF > GET /api/auth/me devuelve el usuario sin datos sensibles
+  [OK] Servicio 1: API de equipos > POST /api/equipos valida los datos (400)
+  [OK] Servicio 1: API de equipos > rechaza campos no permitidos (whitelist)
+  [OK] Servicio 1: API de equipos > aplica la regla de la Factory: cómputo exige número de serie (422)
+  [OK] Servicio 1: API de equipos > POST /api/equipos registra un equipo con folio y movimiento de ingreso (201)
+  [OK] Servicio 1: API de equipos > no permite números de serie duplicados (409)
+  [OK] Servicio 1: API de equipos > GET /api/equipos busca con filtros y paginación
+  [OK] Servicio 1: API de equipos > GET /api/equipos/:id devuelve el detalle o 404
+  [OK] Servicio 1: API de equipos > PATCH /api/equipos/:id actualiza solo campos permitidos
+  [OK] Servicio 1: API de equipos > el capturista no puede diagnosticar (403: autorización en el servidor)
+  [OK] Servicio 1: API de equipos > ciclo completo: diagnóstico (Strategy) → reparación → reasignación
+  [OK] Servicio 1: API de equipos > solo permite entregar a gestores verificados y con evidencia
+  [OK] Servicio 2: API de indicadores > GET /api/indicadores devuelve totales coherentes
+  [OK] Servicio 2: API de indicadores > GET /api/indicadores/reutilizacion y /campanas requieren rol de gestión
+  [OK] Servicio 2: API de indicadores > GET /api/indicadores/publico es accesible sin sesión
+
+Resultado: 20 de 20 pruebas aprobadas.

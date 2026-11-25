@@ -1,0 +1,14 @@
+{
+  "name": "ewaste-360",
+  "private": true,
+  "description": "E-Waste 360° — plataforma web para la gestión sustentable de residuos electrónicos",
+  "scripts": {
+    "install:all": "npm --prefix backend ci && npm --prefix frontend ci",
+    "build": "npm --prefix frontend ci --include=dev && npm --prefix frontend run build && npm --prefix backend ci --include=dev && npm --prefix backend run build",
+    "start": "npm --prefix backend run start:prod",
+    "db:up": "docker compose up -d db"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

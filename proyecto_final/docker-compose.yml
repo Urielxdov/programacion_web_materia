@@ -1,0 +1,20 @@
+# Base de datos local para desarrollo. En producción se usa Neon (PostgreSQL administrado).
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: ewaste360-db
+    environment:
+      POSTGRES_USER: ewaste
+      POSTGRES_PASSWORD: ewaste_dev
+      POSTGRES_DB: ewaste360
+    ports:
+      - "5544:5432"
+    volumes:
+      - ewaste360-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ewaste -d ewaste360"]
+      interval: 5s
+      retries: 10
+
+volumes:
+  ewaste360-data:

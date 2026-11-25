@@ -203,3 +203,9 @@ td.vacio {
     .forms-acceso, .grid-form { grid-template-columns: 1fr; }
     .toolbar { flex-direction: column; align-items: stretch; }
 }
+
+/* ---- Citas ---- */
+.intro { color: #7a6a58; margin: 0 0 20px; }
+.centro { text-align: center; }
+.mono { font-family: Consolas, monospace; white-space: nowrap; }
+input.mayus { text-transform: uppercase; }

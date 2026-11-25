@@ -1,0 +1,19 @@
+Pruebas unitarias (npm test)
+Fecha: 2026-11-23 21:39
+
+/src/modules/equipos/equipo.spec.ts
+  [OK] crea equipos de cómputo que requieren borrado de datos
+  [OK] exige número de serie a los equipos de cómputo
+  [OK] las baterías nacen como gestión especializada
+  [OK] cada perfil ofrece recomendaciones de entrega propias
+  [OK] no se puede reasignar un equipo reparable
+  [OK] flujo reparar → reasignar exige confirmar el borrado de datos
+  [OK] no se puede entregar a un gestor no verificado
+/src/modules/diagnosticos/strategies/clasificador-destino.spec.ts
+  [OK] un equipo que funciona sin costo es FUNCIONAL
+  [OK] si repararlo cuesta menos del 50% del valor de reposición, es REPARABLE
+  [OK] si repararlo cuesta más del 50%, va a GESTION_ESPECIALIZADA
+  [OK] las baterías siempre van a gestión especializada aunque funcionen
+  [OK] el daño estructural tiene prioridad sobre que el equipo encienda
+
+Resultado: 12 de 12 pruebas aprobadas.

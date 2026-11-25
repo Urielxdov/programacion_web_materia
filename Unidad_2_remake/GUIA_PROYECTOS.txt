@@ -1,0 +1,214 @@
+GUIA DE PROYECTOS - UNIDAD 2 (REMAKE)
+=====================================
+
+Que es cada carpeta, como prepararla y como entrar a verla.
+
+
+RESUMEN
+-------
+
+assets/
+  Que es:      Logos del menu (no se abre solo)
+
+practica_1/
+  Que es:      Practica 1: menus responsivos y efecto de imagen
+  Necesita:    Nada
+  Como se abre: Doble clic al .html
+
+sitio_web_responsivo/
+  Que es:      Sitio web responsivo (menu, galeria, about, contact)
+  Necesita:    Nada
+  Como se abre: Doble clic a index.html
+
+equipo_3/
+  Que es:      "Periodico Web" instalable (PWA) + guia PDF
+  Necesita:    Nada
+  Como se abre: Doble clic a index.html
+
+equipo_6/
+  Que es:      Laboratorio de Prompt Injection (chat con Gemini)
+  Necesita:    API key de Gemini
+  Como se abre: Doble clic a index.html
+
+proyecto_individual/
+  Que es:      Sistema de citas (PHP + MySQL + AJAX)
+  Necesita:    PHP + MySQL
+  Como se abre: php -S, luego http://localhost:8080
+
+equipo_4/
+  Que es:      API REST de tareas (Django + JWT + PostgreSQL)
+  Necesita:    Python o Docker, y PostgreSQL
+  Como se abre: http://127.0.0.1:8001 (o 8000 con Docker)
+
+proyecto_final/
+  Que es:      E-Waste 360 (PHP MVC + API REST)
+  Necesita:    PHP 8.1+ y MySQL o PostgreSQL
+  Como se abre: http://localhost:8000
+
+El menu con frames que une todo es PresentacionActividades.html. Los enlaces
+a equipo_4 y proyecto_final apuntan a localhost, asi que solo funcionan con
+esos servidores encendidos.
+
+
+QUE ES CADA UNA
+---------------
+
+practica_1/
+  Tres paginas sueltas de HTML/CSS: menu_responsivo.html,
+  menu_hamburguesa.html (checkbox hack) y "efecto de imagen.html" (clip-path,
+  con img/stranger-things.jpg).
+
+sitio_web_responsivo/
+  Sitio responsivo "Mi sitio web responsivo": index.html, css/main.css,
+  js/main.js, logos y redes en SVG, portada-01 a portada-09.jpg y poster.jpg.
+  Falta video/video.mp4; mientras tanto se muestra el poster.
+
+proyecto_individual/ - Sistema de citas del Dr. Xavier
+  CRUD en PHP + PDO + MySQL con AJAX (fetch).
+  - index.php: login y registro
+  - dashboard.php: panel
+  - altas.php y editar.php: formularios
+  - form_campos.php: campos compartidos
+  - catalogos.php: listas y validaciones (CURP, fechas, paises)
+  - acciones.php: backend JSON
+  - app.js: frontend
+  - schema.sql: base de datos
+  Roles: el primer usuario que se registre es admin (alta, consulta,
+  modificacion y borrado); los siguientes son asistente (solo alta y
+  consulta).
+
+equipo_3/ - Periodico Web
+  Pagina index.html empaquetada como PWA (manifest.json, workbox-config.js),
+  con capturas (web1.jpg, web2.jpg) y la guia GUIA_PW.pdf. Su README.md esta
+  practicamente vacio.
+
+equipo_4/ - API REST de tareas
+  Django REST Framework + JWT + PostgreSQL.
+  - config/: ajustes
+  - tasks/: modelo, serializer, vistas, frontend en templates/index.html
+  - clientes/cliente.py: cliente con requests
+  Incluye Docker, render.yaml, DEPLOY_GCP.md y la guia
+  Guia_Practica_Programacion_Web.docx.
+
+equipo_6/ - Laboratorio de Seguridad en IA
+  Un solo index.html: chat contra Gemini para practicar prompt injection. La
+  API key se pega en la propia pagina (no se guarda en el repo).
+
+proyecto_final/ - E-Waste 360
+  Proyecto integrador (Programacion Web + Desarrollo Sustentable, AGO-DIC
+  2026). Registra equipos electronicos en desuso, evalua si reutilizarlos,
+  repararlos o enviarlos a gestion, documenta movimientos, organiza campanas
+  e indicadores. PHP con MVC (Front Controller, Repository, Strategy,
+  Factory), API REST, MySQL o PostgreSQL, Docker y Render. Documentacion en
+  proyecto_final/docs/.
+
+
+COMO PREPARARLOS Y ENTRAR
+-------------------------
+
+0. Requisitos de la PC
+
+  - Navegador: todos los proyectos.
+  - PHP 8.1+ con pdo_mysql (XAMPP sirve): proyecto_individual y
+    proyecto_final.
+  - MySQL/MariaDB encendido: proyecto_individual y proyecto_final.
+  - Python 3 o Docker Desktop, y PostgreSQL: equipo_4.
+
+  Estado de esta PC al preparar la guia: PHP y Python no estan en el PATH,
+  MySQL (3306) y PostgreSQL (5432) estan escuchando, y Docker Desktop esta
+  instalado pero apagado. Instala o activa lo que falte segun el proyecto.
+
+1. Solo abrir (sin instalar nada)
+
+  practica_1/*.html, sitio_web_responsivo/index.html, equipo_3/index.html y
+  equipo_6/index.html: doble clic o arrastrar al navegador.
+  - equipo_6: pega tu API key de Google Gemini arriba y pulsa "Conectar al
+    Servidor".
+
+2. Menu con frames + CRUD de citas
+
+  cd Unidad_2_remake
+  php -S localhost:8080
+
+  Abre http://localhost:8080/PresentacionActividades.html (o directo
+  http://localhost:8080/proyecto_individual/index.php).
+
+  Base de datos, una sola vez:
+  1. Enciende MySQL.
+  2. Ejecuta proyecto_individual/schema.sql (phpMyAdmin o
+     "mysql < schema.sql"). Crea sistema_citas con las tablas usuarios y
+     citas.
+  3. Puerto: conexion.php usa el 3307 por defecto. Si tu MySQL esta en 3306,
+     arranca asi (PowerShell):
+
+       $env:CITAS_DB_PORT="3306"; php -S localhost:8080
+
+     Tambien existen CITAS_DB_HOST, CITAS_DB_USER y CITAS_DB_PASS.
+  4. En el login, registrate primero: ese usuario sera admin.
+
+3. proyecto_final (E-Waste 360)
+
+  cd Unidad_2_remake\proyecto_final
+  copy .env.example .env                  (ya esta creado en esta PC)
+  $env:SEED_PASSWORD="Demo2026x"          (minimo 8 caracteres, letras y numeros)
+  php database/instalar.php --crear-bd    (solo la primera vez)
+  php -S localhost:8000 -t public public/router.php
+
+  Entra a http://localhost:8000 con admin, responsable o capturista y la
+  contrasena de SEED_PASSWORD.
+  - .env apunta a MySQL en 127.0.0.1:3306, usuario root sin contrasena;
+    ajustalo si tu MySQL es distinto.
+  - Para PostgreSQL, descomenta DATABASE_URL en .env y habilita pdo_pgsql.
+  - Reiniciar datos: php database/instalar.php --reiniciar
+  - Documentacion: proyecto_final/docs/ (arquitectura, API, manual de
+    usuario, diagramas en diagramas.html).
+
+4. equipo_4 (API de tareas)
+
+  Opcion A - Docker (recomendada)
+
+    cd Unidad_2_remake\equipo_4
+    copy .env.example .env      (edita DEMO_PASSWORD, DB_PASSWORD y SECRET_KEY)
+    docker compose up --build   (abre Docker Desktop antes)
+
+    Queda en http://localhost:8000 (PostgreSQL en el puerto 5433).
+
+  Opcion B - Python local (requiere PostgreSQL)
+
+    cd Unidad_2_remake\equipo_4
+    python -m venv .venv
+    .venv\Scripts\activate
+    pip install -r requirements.txt
+    copy .env.example .env      (edita SECRET_KEY, DB_* y DEMO_PASSWORD)
+    python manage.py migrate
+    python manage.py crear_demo
+    python manage.py runserver 8001
+
+    Queda en http://127.0.0.1:8001, que es el enlace que usa el menu.
+
+  Ojo: Docker publica el 8000, el mismo puerto que proyecto_final. No los
+  corras a la vez, o usa la opcion B (8001). Con Docker, el enlace del menu
+  (8001) no coincide.
+
+  Detalles y despliegue (Render, Cloud Run): equipo_4/README.md y
+  equipo_4/DEPLOY_GCP.md.
+
+
+PROBLEMAS COMUNES
+-----------------
+
+- "php" no se reconoce
+  PHP no esta en el PATH; agrega C:\xampp\php o instala PHP.
+
+- "Error de conexion a la base de datos" en citas
+  Puerto equivocado: usa CITAS_DB_PORT=3306 o enciende MySQL.
+
+- Los enlaces de equipo_4 / proyecto final del menu no cargan
+  Falta levantar su servidor (8001 / 8000).
+
+- "docker compose" falla al conectar
+  Docker Desktop esta apagado.
+
+- El menu se ve vacio en el navegador
+  Los frameset son HTML antiguo; abre indiceActividades.html directo si tu
+  navegador los bloquea.

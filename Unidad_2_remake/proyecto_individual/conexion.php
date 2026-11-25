@@ -1,11 +1,11 @@
 <?php
 // Parametros de conexion (XAMPP: usuario root sin contraseña).
 // En esta PC el MariaDB de XAMPP escucha en el puerto 3307; en un XAMPP por defecto es 3306.
-$host   = getenv('INVITADOS_DB_HOST') ?: '127.0.0.1';
-$port   = getenv('INVITADOS_DB_PORT') ?: '3307';
-$dbname = 'sistema_invitados';
-$user   = getenv('INVITADOS_DB_USER') ?: 'root';
-$pass   = getenv('INVITADOS_DB_PASS') ?: '';
+$host   = getenv('CITAS_DB_HOST') ?: '127.0.0.1';
+$port   = getenv('CITAS_DB_PORT') ?: '3307';
+$dbname = 'sistema_citas';
+$user   = getenv('CITAS_DB_USER') ?: 'root';
+$pass   = getenv('CITAS_DB_PASS') ?: '';
 
 try {
     $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8", $user, $pass);

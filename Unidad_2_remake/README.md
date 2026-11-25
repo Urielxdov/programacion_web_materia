@@ -6,7 +6,7 @@ Menú con frames igual al de Unidad 1: `PresentacionActividades.html` (superior 
 |---|---|
 | `practica_1/` | Menú responsivo, menú hamburguesa (checkbox hack) y efecto de imagen con `clip-path` |
 | `sitio_web_responsivo/` | Sitio responsivo (menú escritorio/móvil, video, galería WORK, about, contact) |
-| `proyecto_individual/` | CRUD de invitados en PHP + PDO + MySQL + AJAX (fetch) |
+| `proyecto_individual/` | Sistema de citas del Dr. Xavier en PHP + PDO + MySQL + AJAX (fetch), con inicio de sesión para administrador y asistente |
 | `equipo_3/` | Guía didáctica de arquitectura web (página instalable como app: `manifest.json`) y la guía en PDF |
 | `equipo_4/` | API REST de tareas con Django REST Framework + JWT + PostgreSQL, lista para Render. Incluye la guía de la práctica (`.docx`). Ver `equipo_4/README.md` |
 | `equipo_6/` | Laboratorio de Prompt Injection (chat con Gemini; pide tu propia API key en la página) |
@@ -26,9 +26,9 @@ php -S localhost:8080
 ### Base de datos del CRUD
 
 1. Arranca MySQL en XAMPP.
-2. Ejecuta `proyecto_individual/schema.sql` en phpMyAdmin (crea `sistema_invitados`).
-3. Si tu MySQL no está en el puerto 3307, cambia `$port` en `proyecto_individual/conexion.php`.
-4. El primer usuario que se registre será **admin**; los siguientes, **asistente**.
+2. Ejecuta `proyecto_individual/schema.sql` en phpMyAdmin (crea `sistema_citas` con las tablas `usuarios` y `citas`).
+3. Si tu MySQL no está en el puerto 3307, define la variable de entorno `CITAS_DB_PORT` o cambia `$port` en `proyecto_individual/conexion.php`.
+4. El primer usuario que se registre será **admin** (todos los privilegios: alta, consulta, modificación y eliminación de citas); los siguientes, **asistente** (solo alta y consulta de citas).
 
 ## Archivos de muestra por reemplazar
 

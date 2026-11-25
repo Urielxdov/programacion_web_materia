@@ -4,6 +4,7 @@ if (!isset($_SESSION['id_usuario'])) {
     header('Location: index.php');
     exit;
 }
+// Modificar citas es exclusivo del administrador
 if ($_SESSION['rol'] !== 'admin') {
     header('Location: dashboard.php');
     exit;
@@ -11,7 +12,7 @@ if ($_SESSION['rol'] !== 'admin') {
 require 'conexion.php';
 
 $id = (int) ($_GET['id'] ?? 0);
-$stmt = $pdo->prepare('SELECT * FROM invitados WHERE id_invitado = ?');
+$stmt = $pdo->prepare('SELECT * FROM citas WHERE id_cita = ?');
 $stmt->execute([$id]);
 $inv = $stmt->fetch();
 
@@ -25,15 +26,15 @@ if (!$inv) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Invitado</title>
+    <title>Modificar cita</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Editar Invitado #<?= (int) $inv['id_invitado'] ?></h1>
+        <h1>Modificar cita #<?= (int) $inv['id_cita'] ?></h1>
         <form id="formEditar" method="POST" action="acciones.php">
             <input type="hidden" name="accion" value="editar">
-            <input type="hidden" name="id_invitado" value="<?= (int) $inv['id_invitado'] ?>">
+            <input type="hidden" name="id_cita" value="<?= (int) $inv['id_cita'] ?>">
             <?php include 'form_campos.php'; ?>
             <div class="botones">
                 <button type="submit" class="btn">Guardar Cambios</button>

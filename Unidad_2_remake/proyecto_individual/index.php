@@ -62,12 +62,13 @@ if (isset($_POST['login'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Invitados - Acceso</title>
+    <title>Sistema de Citas - Acceso</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Sistema de Invitados</h1>
+        <h1>Sistema de Citas</h1>
+        <p class="intro centro">Consultorio del Dr. Xavier</p>
 
         <?php if ($mensaje): ?>
             <div class="mensaje <?= $tipo ?>"><?= htmlspecialchars($mensaje) ?></div>
@@ -94,7 +95,7 @@ if (isset($_POST['login'])) {
                     <input type="password" name="password" minlength="4" required>
                 </label>
                 <button type="submit" name="registro" class="btn">Crear cuenta</button>
-                <p class="nota">El primer usuario registrado será administrador.</p>
+                <p class="nota">El primer usuario registrado será administrador; los demás serán asistentes (alta y consulta de citas).</p>
             </form>
         </div>
     </div>

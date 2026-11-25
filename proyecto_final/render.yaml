@@ -1,0 +1,24 @@
+# Blueprint de Render: un solo Web Service que compila React y lo sirve desde NestJS
+# (mismo dominio → cookies de sesión seguras sin CORS). La base de datos está en Neon.
+services:
+  - type: web
+    name: ewaste360
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm run build
+    startCommand: npm start
+    healthCheckPath: /api/indicadores/publico
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 22.16.0
+      - key: DATABASE_URL
+        sync: false # cadena de conexión de Neon (se captura en el panel de Render)
+      - key: DB_SSL
+        value: "true"
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: CSRF_SECRET
+        generateValue: true
