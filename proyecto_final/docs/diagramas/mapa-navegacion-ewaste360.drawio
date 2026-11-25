@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="1" name="01 - Navegación pública y entrada al panel">
+    <mxGraphModel page="1" pageWidth="1800" pageHeight="1250" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="01 - Navegación pública y entrada al panel" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;text;fillColor=none;strokeColor=none;fontSize=26;fontStyle=1;">
+          <mxGeometry as="geometry" x="35" y="20" width="1700" height="55" />
+        </mxCell>
+        <mxCell id="3" value="Sitio público&#10;PublicLayout" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="650" y="120" width="475" height="110" />
+        </mxCell>
+        <mxCell id="4" value="Inicio&#10;/" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="40" y="360" width="475" height="135" />
+        </mxCell>
+        <mxCell id="5" value="Guía ambiental&#10;/guia" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="650" y="360" width="475" height="135" />
+        </mxCell>
+        <mxCell id="6" value="Campañas públicas&#10;/campanas" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="1260" y="360" width="475" height="135" />
+        </mxCell>
+        <mxCell id="7" value="Detalle de campaña&#10;/campanas/:id&#10;Formulario de participación en esta pantalla" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="1260" y="610" width="475" height="135" />
+        </mxCell>
+        <mxCell id="8" value="Inicio de sesión&#10;/entrar" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="40" y="610" width="475" height="135" />
+        </mxCell>
+        <mxCell id="9" value="Panel de personal&#10;/panel&#10;Requiere sesión válida" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="40" y="860" width="475" height="135" />
+        </mxCell>
+        <mxCell id="10" value="Ruta pública no encontrada&#10;* → NoEncontradaPage" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="650" y="860" width="475" height="135" />
+        </mxCell>
+        <mxCell id="11" value="ruta pública" edge="1" parent="1" source="3" target="4" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="12" value="ruta pública" edge="1" parent="1" source="3" target="5" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="13" value="ruta pública" edge="1" parent="1" source="3" target="6" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="14" value="ruta pública" edge="1" parent="1" source="3" target="8" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;exitX=0;exitY=0.8;entryX=1;entryY=0.5;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="600" y="208" />
+              <mxPoint x="600" y="677.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="15" value="abrir campaña" edge="1" parent="1" source="6" target="7" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="16" value="login correcto" edge="1" parent="1" source="8" target="9" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="17" value="Mapa elaborado a partir de router.tsx al documentar el proyecto. Las conexiones desde PublicLayout agrupan rutas; no representan todos los enlaces de la interfaz.&#10;Si se intenta abrir una ruta del panel sin sesión, RutaProtegida redirige a /entrar?volver=&lt;ruta&gt;. El login admite como retorno rutas que comienzan con /panel.&#10;La participación es un formulario dentro del detalle de campaña; no existe una ruta independiente para enviarlo. El comodín muestra la página 404." vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;shape=note;fillColor=#fff2cc;strokeColor=#d6b656;align=left;fontSize=16;">
+          <mxGeometry as="geometry" x="40" y="1060" width="1695" height="150" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="2" name="02 - Navegación privada por permisos">
+    <mxGraphModel page="1" pageWidth="1800" pageHeight="1250" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="02 - Navegación privada por permisos" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;text;fillColor=none;strokeColor=none;fontSize=26;fontStyle=1;">
+          <mxGeometry as="geometry" x="35" y="20" width="1700" height="55" />
+        </mxCell>
+        <mxCell id="3" value="Resumen del panel&#10;/panel&#10;PrivateLayout + RutaProtegida" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="650" y="110" width="475" height="135" />
+        </mxCell>
+        <mxCell id="4" value="Todos los roles autenticados&#10;CAPTURISTA / RESPONSABLE / ADMIN" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;fillColor=#e2f0d9;">
+          <mxGeometry as="geometry" x="40" y="360" width="475" height="110" />
+        </mxCell>
+        <mxCell id="5" value="agrupa rutas por permiso" edge="1" parent="1" source="3" target="4" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="6" value="Gestión ambiental&#10;RESPONSABLE / ADMIN" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;fillColor=#dae8fc;">
+          <mxGeometry as="geometry" x="650" y="360" width="475" height="110" />
+        </mxCell>
+        <mxCell id="7" value="agrupa rutas por permiso" edge="1" parent="1" source="3" target="6" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="8" value="Administración&#10;ADMIN" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;fillColor=#f8cecc;">
+          <mxGeometry as="geometry" x="1260" y="360" width="475" height="110" />
+        </mxCell>
+        <mxCell id="9" value="agrupa rutas por permiso" edge="1" parent="1" source="3" target="8" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="10" value="Inventario&#10;/panel/equipos" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="40" y="565" width="475" height="110" />
+        </mxCell>
+        <mxCell id="11" value="Registro de equipo&#10;/panel/equipos/nuevo" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="40" y="755" width="475" height="110" />
+        </mxCell>
+        <mxCell id="12" value="Detalle e historial: /panel/equipos/:id&#10;Edición: /panel/equipos/:id/editar" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="40" y="945" width="475" height="130" />
+        </mxCell>
+        <mxCell id="13" value="" edge="1" parent="1" source="4" target="10" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="14" value="" edge="1" parent="1" source="10" target="11" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="15" value="" edge="1" parent="1" source="10" target="12" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;entryX=0;entryY=0.5;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="20" y="620" />
+              <mxPoint x="20" y="1010" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="16" value="Campañas&#10;/panel/campanas&#10;/panel/campanas/nueva&#10;/panel/campanas/:id" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="650" y="565" width="475" height="170" />
+        </mxCell>
+        <mxCell id="17" value="Reportes&#10;/panel/reportes" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="650" y="805" width="475" height="110" />
+        </mxCell>
+        <mxCell id="18" value="Gestores&#10;/panel/gestores" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="650" y="995" width="475" height="110" />
+        </mxCell>
+        <mxCell id="19" value="" edge="1" parent="1" source="6" target="16" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="20" value="" edge="1" parent="1" source="6" target="17" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;entryX=0;entryY=0.5;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="625" y="415" />
+              <mxPoint x="625" y="860" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="21" value="" edge="1" parent="1" source="6" target="18" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;entryX=0;entryY=0.5;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="595" y="415" />
+              <mxPoint x="595" y="1050" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="22" value="Usuarios&#10;/panel/usuarios" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="1260" y="565" width="475" height="110" />
+        </mxCell>
+        <mxCell id="23" value="Categorías&#10;/panel/categorias" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;">
+          <mxGeometry as="geometry" x="1260" y="805" width="475" height="110" />
+        </mxCell>
+        <mxCell id="24" value="" edge="1" parent="1" source="8" target="22" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="25" value="" edge="1" parent="1" source="8" target="23" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;entryX=0;entryY=0.5;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1225" y="415" />
+              <mxPoint x="1225" y="860" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="26" value="Los grupos son organizativos: ADMIN también accede al inventario y a gestión ambiental. Las acciones de diagnóstico, reparación y destino viven en el detalle del equipo, no en rutas React propias.&#10;La API valida los permisos de cada operación. Un rol incorrecto muestra acceso denegado en RutaProtegida; los comodines del panel muestran NoEncontradaPage." vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;spacing=12;shape=note;fillColor=#fff2cc;strokeColor=#d6b656;align=left;fontSize=16;">
+          <mxGeometry as="geometry" x="40" y="1130" width="1695" height="100" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

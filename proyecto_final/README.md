@@ -34,11 +34,27 @@ proyecto_final/
 ├── frontend/           SPA React
 │   └── src/            api/ (cliente + hooks TanStack), stores/ (Zustand), components/, features/
 ├── docs/               arquitectura, UML, modelo de datos, API, manual de usuario, reporte
-├── docker-compose.yml  PostgreSQL local
+├── docker-compose.yml  PostgreSQL + backend (NestJS) + frontend (React/nginx)
 └── render.yaml         despliegue en Render
 ```
 
-## Instalación local
+## Con Docker (todo en contenedores)
+
+```bash
+docker compose up -d --build
+```
+
+Levanta tres contenedores: `db` (PostgreSQL 16), `backend` (NestJS: migraciones + seed al arrancar) y `frontend`
+(React compilado, servido por nginx, que reenvía `/api` al backend).
+
+- Aplicación: <http://localhost:8080> (cambia el puerto con `FRONTEND_PORT`)
+- API y Swagger: <http://localhost:3000/api/docs>
+- Cuentas de prueba: ver abajo (contraseña `Demo2026!` por defecto)
+- Apagar: `docker compose down` (con `-v` borra también los datos)
+
+Los valores por defecto son solo para desarrollo; para cambiarlos copia `.env.example` como `.env` en la raíz.
+
+## Instalación local (sin contenedores de aplicación)
 
 Requisitos: **Node.js 22+**, **Docker** (o un PostgreSQL 16 propio).
 

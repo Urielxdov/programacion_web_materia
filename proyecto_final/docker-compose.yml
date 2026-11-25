@@ -1,11 +1,22 @@
-# Base de datos local para desarrollo. En producción se usa Neon (PostgreSQL administrado).
+# E-Waste 360°: base de datos + backend (NestJS) + frontend (React + nginx).
+#
+#   docker compose up -d --build        levanta todo
+#   docker compose up -d db             solo la base (para desarrollo con `npm run start:dev` / `npm run dev`)
+#   docker compose down                 apaga (agrega -v para borrar también los datos)
+#
+#   Frontend   http://localhost:8080            (React; nginx reenvía /api al backend)
+#   Backend    http://localhost:3000/api        (Swagger en /api/docs)
+#   PostgreSQL localhost:5544                   (usuario ewaste)
+#
+# Los valores por defecto son SOLO para desarrollo local. Para cambiarlos crea un archivo .env
+# junto a este compose (ver .env.example en la raíz).
 services:
   db:
     image: postgres:16-alpine
     container_name: ewaste360-db
     environment:
       POSTGRES_USER: ewaste
-      POSTGRES_PASSWORD: ewaste_dev
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ewaste_dev}
       POSTGRES_DB: ewaste360
     ports:
       - "5544:5432"
@@ -14,7 +25,45 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ewaste -d ewaste360"]
       interval: 5s
+      timeout: 5s
       retries: 10
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    container_name: ewaste360-backend
+    environment:
+      # development: las cookies de sesión no exigen HTTPS (necesario al abrir http://localhost).
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: "3000"
+      DATABASE_URL: postgres://ewaste:${POSTGRES_PASSWORD:-ewaste_dev}@db:5432/ewaste360
+      DB_SSL: "false"
+      SESSION_SECRET: ${SESSION_SECRET:-solo-desarrollo-local-cambia-este-secreto-de-sesion}
+      CSRF_SECRET: ${CSRF_SECRET:-solo-desarrollo-local-cambia-este-secreto-csrf}
+      SEED_DEMO_PASSWORD: ${SEED_DEMO_PASSWORD:-Demo2026!}
+      SEED_ON_START: ${SEED_ON_START:-true}
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/indicadores/publico').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: ewaste360-frontend
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   ewaste360-data:

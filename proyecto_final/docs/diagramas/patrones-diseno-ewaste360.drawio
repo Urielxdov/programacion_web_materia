@@ -1,0 +1,244 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="1" name="01 - Factory: creación de equipos por perfil">
+    <mxGraphModel page="1" pageWidth="1440" pageHeight="950" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="01 - Factory: creación de equipos por perfil" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;text;fillColor=none;strokeColor=none;fontSize=25;fontStyle=1;align=left;">
+          <mxGeometry as="geometry" x="35" y="20" width="1350" height="50" />
+        </mxCell>
+        <mxCell id="3" value="EquiposService&#10;────────────────────&#10;registrar(dto, usuarioId)" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="40" y="140" width="360" height="150" />
+        </mxCell>
+        <mxCell id="4" value="EquipoFactory&#10;────────────────────&#10;- perfiles: Record&lt;TipoCategoria, PerfilEquipo&gt;&#10;+ perfilPara(tipo)&#10;+ crear(p): Equipo" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="510" y="120" width="430" height="190" />
+        </mxCell>
+        <mxCell id="5" value="Equipo&#10;────────────────────&#10;condicion / estadoDestino&#10;requiereBorradoDatos / datosBorrados" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="1030" y="140" width="350" height="150" />
+        </mxCell>
+        <mxCell id="6" value="«abstract» PerfilEquipo&#10;────────────────────&#10;validar(datos)&#10;condicionInicial()&#10;requiereBorradoDatos()&#10;recomendacionesEntrega()" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="520" y="400" width="410" height="220" />
+        </mxCell>
+        <mxCell id="7" value="PerfilComputo / PerfilMovil&#10;────────────────────&#10;Borrado de datos requerido&#10;Cómputo exige número de serie" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="40" y="650" width="390" height="110" />
+        </mxCell>
+        <mxCell id="8" value="PerfilEnergia&#10;────────────────────&#10;Condición inicial:&#10;GESTION_ESPECIALIZADA" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="520" y="650" width="410" height="110" />
+        </mxCell>
+        <mxCell id="9" value="PerfilPeriferico / PerfilCableado&#10;PerfilGenerico&#10;────────────────────&#10;Valores y recomendaciones por tipo" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="1020" y="650" width="360" height="110" />
+        </mxCell>
+        <mxCell id="10" value="usa" edge="1" parent="1" source="3" target="4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="11" value="«create»" edge="1" parent="1" source="4" target="5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="12" value="selecciona y consulta" edge="1" parent="1" source="4" target="6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="13" value="" edge="1" parent="1" source="7" target="6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;endFill=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="235" y="635" />
+              <mxPoint x="725" y="635" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="14" value="" edge="1" parent="1" source="8" target="6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;endFill=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="725" y="635" />
+              <mxPoint x="725" y="635" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="15" value="" edge="1" parent="1" source="9" target="6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;endFill=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1200" y="635" />
+              <mxPoint x="725" y="635" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="16" value="Fábrica simple con perfiles polimórficos: todos los productos son Equipo. Las cajas con varios nombres agrupan clases concretas. La fábrica construye y valida; EquiposRepository persiste. Toda creación inicia con destino EN_INVENTARIO." vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;shape=note;fillColor=#fff2cc;strokeColor=#d6b656;align=left;">
+          <mxGeometry as="geometry" x="40" y="800" width="1340" height="120" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="2" name="02 - Strategy: clasificación del diagnóstico">
+    <mxGraphModel page="1" pageWidth="1440" pageHeight="950" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="02 - Strategy: clasificación del diagnóstico" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;text;fillColor=none;strokeColor=none;fontSize=25;fontStyle=1;align=left;">
+          <mxGeometry as="geometry" x="35" y="20" width="1350" height="50" />
+        </mxCell>
+        <mxCell id="3" value="DiagnosticosService&#10;────────────────────&#10;simular() / registrar()" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="40" y="130" width="380" height="150" />
+        </mxCell>
+        <mxCell id="4" value="ClasificadorDestino&#10;────────────────────&#10;- estrategias: EstrategiaClasificacion[]&#10;+ clasificar(ctx)" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="530" y="130" width="390" height="150" />
+        </mxCell>
+        <mxCell id="5" value="«abstract» EstrategiaClasificacion&#10;────────────────────&#10;prioridad / nombre&#10;aplica(ctx)&#10;clasificar(ctx)&#10;# condicion() / justificar(ctx)" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="530" y="390" width="390" height="210" />
+        </mxCell>
+        <mxCell id="6" value="usa" edge="1" parent="1" source="3" target="4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="7" value="ordena y selecciona" edge="1" parent="1" source="4" target="5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="8" value="GestionEspecializadaStrategy&#10;Prioridad 1&#10;Peligrosidad o daño estructural" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="40" y="660" width="310" height="110" />
+        </mxCell>
+        <mxCell id="9" value="" edge="1" parent="1" source="8" target="5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;endFill=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="195" y="630" />
+              <mxPoint x="725" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="10" value="ReutilizacionDirectaStrategy&#10;Prioridad 2&#10;Enciende y costo = 0" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="390" y="660" width="310" height="110" />
+        </mxCell>
+        <mxCell id="11" value="" edge="1" parent="1" source="10" target="5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;endFill=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="545" y="630" />
+              <mxPoint x="725" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="12" value="ReparacionStrategy&#10;Prioridad 3&#10;Costo ≤ 50% de reposición" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="740" y="660" width="310" height="110" />
+        </mxCell>
+        <mxCell id="13" value="" edge="1" parent="1" source="12" target="5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;endFill=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="895" y="630" />
+              <mxPoint x="725" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="14" value="ReparacionNoRentableStrategy&#10;Prioridad 99&#10;Respaldo: aplica siempre" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="1090" y="660" width="310" height="110" />
+        </mxCell>
+        <mxCell id="15" value="" edge="1" parent="1" source="14" target="5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;endFill=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1245" y="630" />
+              <mxPoint x="725" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="16" value="ResultadoClasificacion&#10;────────────────────&#10;condicion&#10;justificacion&#10;estrategia" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="1040" y="150" width="350" height="190" />
+        </mxCell>
+        <mxCell id="17" value="devuelve" edge="1" parent="1" source="4" target="16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="18" value="DiagnosticosModule registra las cuatro estrategias mediante ESTRATEGIAS_CLASIFICACION. Se elige solo la primera aplicable. La clasificación recomienda una condición técnica; no ejecuta una reparación ni una entrega a gestor." vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;shape=note;fillColor=#fff2cc;strokeColor=#d6b656;align=left;">
+          <mxGeometry as="geometry" x="40" y="800" width="1340" height="120" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="3" name="03 - Observer: trazabilidad mediante eventos">
+    <mxGraphModel page="1" pageWidth="1440" pageHeight="950" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="03 - Observer: trazabilidad mediante eventos" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;text;fillColor=none;strokeColor=none;fontSize=25;fontStyle=1;align=left;">
+          <mxGeometry as="geometry" x="35" y="20" width="1350" height="50" />
+        </mxCell>
+        <mxCell id="3" value="Emisores&#10;────────────────────&#10;EquiposService&#10;DiagnosticosService&#10;ReparacionesService" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="40" y="140" width="380" height="210" />
+        </mxCell>
+        <mxCell id="4" value="EventEmitter2&#10;────────────────────&#10;emitAsync(nombre, evento)&#10;wildcard: true" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="530" y="155" width="380" height="175" />
+        </mxCell>
+        <mxCell id="5" value="MovimientosListener&#10;────────────────────&#10;@OnEvent(&quot;equipo.*&quot;)&#10;alOcurrirEventoDeEquipo(evento)" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="1010" y="155" width="380" height="175" />
+        </mxCell>
+        <mxCell id="6" value="«abstract» EventoEquipo&#10;────────────────────&#10;equipoId / responsableId&#10;estadoAnterior / estadoNuevo&#10;nombre / tipoMovimiento&#10;describir()" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="40" y="450" width="380" height="220" />
+        </mxCell>
+        <mxCell id="7" value="EquipoRegistradoEvent&#10;EquipoDiagnosticadoEvent&#10;EquipoReparadoEvent" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="40" y="710" width="380" height="100" />
+        </mxCell>
+        <mxCell id="8" value="MovimientosService&#10;────────────────────&#10;registrarEvento(evento)" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="1010" y="440" width="380" height="140" />
+        </mxCell>
+        <mxCell id="9" value="MovimientosRepository&#10;────────────────────&#10;guardar(movimiento)" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="1010" y="670" width="380" height="120" />
+        </mxCell>
+        <mxCell id="10" value="publica" edge="1" parent="1" source="3" target="4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="11" value="notifica" edge="1" parent="1" source="4" target="5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="12" value="construye" edge="1" parent="1" source="3" target="6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="13" value="" edge="1" parent="1" source="7" target="6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;endFill=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="14" value="delega" edge="1" parent="1" source="5" target="8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="15" value="persiste historial" edge="1" parent="1" source="8" target="9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="16" value="Observer mediante publicación/suscripción en el mismo proceso. emitAsync espera al listener. La transacción principal ya terminó: un fallo del historial puede propagarse sin revertirla. Las decisiones de destino se guardan junto con su movimiento en una sola transacción." vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;shape=note;fillColor=#fff2cc;strokeColor=#d6b656;align=left;">
+          <mxGeometry as="geometry" x="40" y="830" width="1340" height="120" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="4" name="04 - Repository: acceso a datos encapsulado">
+    <mxGraphModel page="1" pageWidth="1440" pageHeight="950" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="04 - Repository: acceso a datos encapsulado" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;text;fillColor=none;strokeColor=none;fontSize=25;fontStyle=1;align=left;">
+          <mxGeometry as="geometry" x="35" y="20" width="1350" height="50" />
+        </mxCell>
+        <mxCell id="3" value="EquiposService&#10;────────────────────&#10;registrar() / buscar() / detalle()" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="40" y="150" width="380" height="160" />
+        </mxCell>
+        <mxCell id="4" value="EquiposRepository&#10;────────────────────&#10;buscar(filtros) / detalle(id)&#10;siguienteFolio()&#10;obtenerParaActualizar()" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="530" y="130" width="390" height="200" />
+        </mxCell>
+        <mxCell id="5" value="«abstract» RepositorioBase&lt;T&gt;&#10;────────────────────&#10;# repo: Repository&lt;T&gt;&#10;# dataSource: DataSource&#10;crear() / buscarPorId() / obtenerPorId()&#10;guardar() / transaccion() / # con()" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="530" y="470" width="440" height="230" />
+        </mxCell>
+        <mxCell id="6" value="TypeORM&#10;────────────────────&#10;DataSource&#10;Repository&lt;T&gt;&#10;EntityManager" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="1060" y="480" width="320" height="200" />
+        </mxCell>
+        <mxCell id="7" value="PostgreSQL&#10;────────────────────&#10;Tablas / restricciones / transacciones" vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;shape=cylinder3;">
+          <mxGeometry as="geometry" x="1060" y="150" width="320" height="160" />
+        </mxCell>
+        <mxCell id="8" value="usa" edge="1" parent="1" source="3" target="4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="9" value="" edge="1" parent="1" source="4" target="5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;endFill=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="10" value="delega persistencia" edge="1" parent="1" source="5" target="6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="11" value="consulta / guarda" edge="1" parent="1" source="6" target="7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;fontFamily=Helvetica;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;endArrow=open;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="12" value="Se muestra EquiposRepository como ejemplo. Otros repositorios heredan la misma base; IndicadoresRepository usa DataSource directamente. La separación es práctica: EquiposService ejecuta un bloqueo SQL de folios dentro de una transacción y algunos servicios coordinan EntityManager." vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;spacing=14;fillColor=#dae8fc;strokeColor=#6c8ebf;shape=note;fillColor=#fff2cc;strokeColor=#d6b656;align=left;">
+          <mxGeometry as="geometry" x="40" y="790" width="1340" height="120" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,723 @@
+{
+  "baseUrl": "http://127.0.0.1:3001",
+  "entorno": "test aislado; PostgreSQL 5545",
+  "casos": [
+    {
+      "id": "HTTP-01",
+      "titulo": "Acceso sin sesión",
+      "fecha": "2026-11-25T00:50:34.633799-06:00",
+      "metodo": "GET",
+      "ruta": "/api/equipos",
+      "cuerpo": null,
+      "esperado": 401,
+      "recibido": 401,
+      "aprobado": true,
+      "respuesta": {
+        "statusCode": 401,
+        "error": "UNAUTHORIZED",
+        "message": "Debes iniciar sesión para continuar.",
+        "path": "/api/equipos",
+        "timestamp": "2026-11-25T06:50:34.633Z"
+      }
+    },
+    {
+      "id": "HTTP-02",
+      "titulo": "Consulta de equipos autenticada",
+      "fecha": "2026-11-25T00:50:34.653209-06:00",
+      "metodo": "GET",
+      "ruta": "/api/equipos?pagina=1&porPagina=5",
+      "cuerpo": null,
+      "esperado": 200,
+      "recibido": 200,
+      "aprobado": true,
+      "respuesta": {
+        "datos": [
+          {
+            "id": 2,
+            "creadoEn": "2026-11-25T06:48:24.219Z",
+            "actualizadoEn": "2026-11-25T06:48:24.967Z",
+            "folio": "EW-2026-0002",
+            "categoria": {
+              "id": 2,
+              "creadoEn": "2026-11-25T06:48:23.373Z",
+              "actualizadoEn": "2026-11-25T06:48:23.373Z",
+              "nombre": "Batería",
+              "tipo": "ENERGIA",
+              "pesoPromedioKg": 0.5,
+              "valorReposicion": 600,
+              "descripcion": null
+            },
+            "marca": "Varios",
+            "modelo": "Pilas",
+            "numeroSerie": null,
+            "fechaIngreso": "2026-11-01",
+            "condicion": "GESTION_ESPECIALIZADA",
+            "estadoDestino": "ENTREGADO_GESTOR",
+            "ubicacion": null,
+            "destinoActual": "Reciclador Verificado",
+            "observaciones": null,
+            "requiereBorradoDatos": false,
+            "datosBorrados": false,
+            "campana": null
+          },
+          {
+            "id": 1,
+            "creadoEn": "2026-11-25T06:48:24.159Z",
+            "actualizadoEn": "2026-11-25T06:48:24.843Z",
+            "folio": "EW-2026-0001",
+            "categoria": {
+              "id": 1,
+              "creadoEn": "2026-11-25T06:48:23.366Z",
+              "actualizadoEn": "2026-11-25T06:48:23.366Z",
+              "nombre": "Laptop",
+              "tipo": "COMPUTO",
+              "pesoPromedioKg": 2,
+              "valorReposicion": 14000,
+              "descripcion": null
+            },
+            "marca": "Dell",
+            "modelo": "Latitude 5490",
+            "numeroSerie": "SN-E2E-1",
+            "fechaIngreso": "2026-11-01",
+            "condicion": "REUTILIZABLE",
+            "estadoDestino": "REASIGNADO",
+            "ubicacion": "Almacén B",
+            "destinoActual": "Laboratorio de redes",
+            "observaciones": null,
+            "requiereBorradoDatos": true,
+            "datosBorrados": true,
+            "campana": null
+          }
+        ],
+        "total": 2,
+        "pagina": 1,
+        "porPagina": 5,
+        "totalPaginas": 1
+      }
+    },
+    {
+      "id": "HTTP-03",
+      "titulo": "Datos inválidos",
+      "fecha": "2026-11-25T00:50:34.664881-06:00",
+      "metodo": "POST",
+      "ruta": "/api/equipos",
+      "cuerpo": {
+        "categoriaId": 1,
+        "marca": "",
+        "modelo": "X",
+        "fechaIngreso": "ayer"
+      },
+      "esperado": 400,
+      "recibido": 400,
+      "aprobado": true,
+      "respuesta": {
+        "statusCode": 400,
+        "error": "BAD_REQUEST",
+        "message": [
+          "Escribe la marca (máximo 80 caracteres).",
+          "Escribe una fecha de ingreso válida."
+        ],
+        "path": "/api/equipos",
+        "timestamp": "2026-11-25T06:50:34.661Z"
+      }
+    },
+    {
+      "id": "HTTP-04",
+      "titulo": "Rol capturista sin permiso de diagnóstico",
+      "fecha": "2026-11-25T00:50:34.673450-06:00",
+      "metodo": "POST",
+      "ruta": "/api/equipos/2/diagnosticos",
+      "cuerpo": {
+        "descripcion": "Revisión de prueba",
+        "enciende": true,
+        "danoEstructural": false,
+        "componentesPeligrosos": false,
+        "costoReparacionEstimado": 0
+      },
+      "esperado": 403,
+      "recibido": 403,
+      "aprobado": true,
+      "respuesta": {
+        "statusCode": 403,
+        "error": "FORBIDDEN",
+        "message": "No tienes permiso para realizar esta acción.",
+        "path": "/api/equipos/2/diagnosticos",
+        "timestamp": "2026-11-25T06:50:34.670Z"
+      }
+    },
+    {
+      "id": "HTTP-05",
+      "titulo": "Escritura autenticada sin CSRF",
+      "fecha": "2026-11-25T00:50:34.682289-06:00",
+      "metodo": "PATCH",
+      "ruta": "/api/equipos/2",
+      "cuerpo": {
+        "ubicacion": "No debe guardarse"
+      },
+      "esperado": 403,
+      "recibido": 403,
+      "aprobado": true,
+      "respuesta": {
+        "statusCode": 403,
+        "error": "FORBIDDEN",
+        "message": "La sesión del formulario expiró. Intenta de nuevo.",
+        "path": "/api/equipos/2",
+        "timestamp": "2026-11-25T06:50:34.679Z"
+      }
+    },
+    {
+      "id": "HTTP-06",
+      "titulo": "Indicadores generales",
+      "fecha": "2026-11-25T00:50:34.735092-06:00",
+      "metodo": "GET",
+      "ruta": "/api/indicadores",
+      "cuerpo": null,
+      "esperado": 200,
+      "recibido": 200,
+      "aprobado": true,
+      "respuesta": {
+        "equipos": {
+          "total": 2,
+          "pendientesDiagnostico": 0,
+          "enReparacion": 0,
+          "reasignados": 1,
+          "conservados": 0,
+          "recuperados": 1,
+          "reparados": 1
+        },
+        "porCondicion": [
+          {
+            "clave": "REUTILIZABLE",
+            "total": 1
+          },
+          {
+            "clave": "GESTION_ESPECIALIZADA",
+            "total": 1
+          }
+        ],
+        "porEstado": [
+          {
+            "clave": "ENTREGADO_GESTOR",
+            "total": 1
+          },
+          {
+            "clave": "REASIGNADO",
+            "total": 1
+          }
+        ],
+        "gestores": {
+          "equiposEntregados": 1,
+          "kgEntregados": 0.5
+        },
+        "economia": {
+          "costoReparaciones": 1500,
+          "ahorroEstimado": 12500
+        },
+        "ambiente": {
+          "kgResiduoEvitado": 2
+        },
+        "participacion": {
+          "participaciones": 0,
+          "equiposDeclarados": 0,
+          "equiposRecibidos": 0,
+          "campanasActivas": 0,
+          "campanasTotales": 0
+        }
+      }
+    },
+    {
+      "id": "HTTP-07",
+      "titulo": "Indicadores públicos sin sesión",
+      "fecha": "2026-11-25T00:50:34.744594-06:00",
+      "metodo": "GET",
+      "ruta": "/api/indicadores/publico",
+      "cuerpo": null,
+      "esperado": 200,
+      "recibido": 200,
+      "aprobado": true,
+      "respuesta": {
+        "equiposRegistrados": 2,
+        "equiposRecuperados": 1,
+        "kgResiduoEvitado": 2,
+        "campanasActivas": 0,
+        "participaciones": 0
+      }
+    },
+    {
+      "id": "HTTP-08",
+      "titulo": "Equipo inexistente en consulta",
+      "fecha": "2026-11-25T00:50:34.769303-06:00",
+      "metodo": "GET",
+      "ruta": "/api/equipos/99999",
+      "cuerpo": null,
+      "esperado": 404,
+      "recibido": 404,
+      "aprobado": true,
+      "respuesta": {
+        "statusCode": 404,
+        "error": "NOT_FOUND",
+        "message": "El equipo con id 99999 no existe.",
+        "path": "/api/equipos/99999",
+        "timestamp": "2026-11-25T06:50:34.765Z"
+      }
+    },
+    {
+      "id": "HTTP-09",
+      "titulo": "Capturista sin acceso a reporte detallado",
+      "fecha": "2026-11-25T00:50:34.780045-06:00",
+      "metodo": "GET",
+      "ruta": "/api/indicadores/reutilizacion",
+      "cuerpo": null,
+      "esperado": 403,
+      "recibido": 403,
+      "aprobado": true,
+      "respuesta": {
+        "statusCode": 403,
+        "error": "FORBIDDEN",
+        "message": "No tienes permiso para realizar esta acción.",
+        "path": "/api/indicadores/reutilizacion",
+        "timestamp": "2026-11-25T06:50:34.775Z"
+      }
+    },
+    {
+      "id": "HTTP-10",
+      "titulo": "Administrador crea categoría",
+      "fecha": "2026-11-25T00:50:34.809500-06:00",
+      "metodo": "POST",
+      "ruta": "/api/catalogos/categorias",
+      "cuerpo": {
+        "nombre": "Cable de prueba documental",
+        "tipo": "CABLEADO",
+        "pesoPromedioKg": 0.3,
+        "valorReposicion": 200
+      },
+      "esperado": 201,
+      "recibido": 201,
+      "aprobado": true,
+      "respuesta": {
+        "id": 3,
+        "creadoEn": "2026-11-25T06:50:33.121Z",
+        "actualizadoEn": "2026-11-25T06:50:33.121Z",
+        "nombre": "Cable de prueba documental",
+        "tipo": "CABLEADO",
+        "pesoPromedioKg": 0.3,
+        "valorReposicion": 200,
+        "descripcion": null
+      }
+    },
+    {
+      "id": "HTTP-11",
+      "titulo": "Catálogo público",
+      "fecha": "2026-11-25T00:50:34.816423-06:00",
+      "metodo": "GET",
+      "ruta": "/api/catalogos/categorias",
+      "cuerpo": null,
+      "esperado": 200,
+      "recibido": 200,
+      "aprobado": true,
+      "respuesta": [
+        {
+          "id": 2,
+          "creadoEn": "2026-11-25T06:48:23.373Z",
+          "actualizadoEn": "2026-11-25T06:48:23.373Z",
+          "nombre": "Batería",
+          "tipo": "ENERGIA",
+          "pesoPromedioKg": 0.5,
+          "valorReposicion": 600,
+          "descripcion": null
+        },
+        {
+          "id": 3,
+          "creadoEn": "2026-11-25T06:50:33.121Z",
+          "actualizadoEn": "2026-11-25T06:50:33.121Z",
+          "nombre": "Cable de prueba documental",
+          "tipo": "CABLEADO",
+          "pesoPromedioKg": 0.3,
+          "valorReposicion": 200,
+          "descripcion": null
+        },
+        {
+          "id": 1,
+          "creadoEn": "2026-11-25T06:48:23.366Z",
+          "actualizadoEn": "2026-11-25T06:48:23.366Z",
+          "nombre": "Laptop",
+          "tipo": "COMPUTO",
+          "pesoPromedioKg": 2,
+          "valorReposicion": 14000,
+          "descripcion": null
+        }
+      ]
+    },
+    {
+      "id": "HTTP-12",
+      "titulo": "Responsable crea campaña",
+      "fecha": "2026-11-25T00:50:34.854079-06:00",
+      "metodo": "POST",
+      "ruta": "/api/campanas",
+      "cuerpo": {
+        "nombre": "Campaña de prueba documental",
+        "descripcion": "Campaña temporal para comprobar la API de acopio.",
+        "fechaInicio": "2026-11-25",
+        "fechaFin": "2026-11-26",
+        "ubicacion": "Punto de prueba",
+        "categoriasIds": [
+          3
+        ]
+      },
+      "esperado": 201,
+      "recibido": 201,
+      "aprobado": true,
+      "respuesta": {
+        "id": 1,
+        "creadoEn": "2026-11-25T06:50:33.160Z",
+        "actualizadoEn": "2026-11-25T06:50:33.160Z",
+        "nombre": "Campaña de prueba documental",
+        "descripcion": "Campaña temporal para comprobar la API de acopio.",
+        "fechaInicio": "2026-11-25",
+        "fechaFin": "2026-11-26",
+        "ubicacion": "Punto de prueba",
+        "horario": null,
+        "estado": "PROGRAMADA",
+        "metaEquipos": null,
+        "categoriasAceptadas": [
+          {
+            "id": 3,
+            "creadoEn": "2026-11-25T06:50:33.121Z",
+            "actualizadoEn": "2026-11-25T06:50:33.121Z",
+            "nombre": "Cable de prueba documental",
+            "tipo": "CABLEADO",
+            "pesoPromedioKg": 0.3,
+            "valorReposicion": 200,
+            "descripcion": null
+          }
+        ],
+        "totalParticipaciones": 0,
+        "equiposRecibidosTotal": 0,
+        "equiposDeclarados": 0
+      }
+    },
+    {
+      "id": "HTTP-13",
+      "titulo": "Activación de campaña",
+      "fecha": "2026-11-25T00:50:34.894036-06:00",
+      "metodo": "PATCH",
+      "ruta": "/api/campanas/1",
+      "cuerpo": {
+        "estado": "ACTIVA"
+      },
+      "esperado": 200,
+      "recibido": 200,
+      "aprobado": true,
+      "respuesta": {
+        "id": 1,
+        "creadoEn": "2026-11-25T06:50:33.160Z",
+        "actualizadoEn": "2026-11-25T06:50:33.210Z",
+        "nombre": "Campaña de prueba documental",
+        "descripcion": "Campaña temporal para comprobar la API de acopio.",
+        "fechaInicio": "2026-11-25",
+        "fechaFin": "2026-11-26",
+        "ubicacion": "Punto de prueba",
+        "horario": null,
+        "estado": "ACTIVA",
+        "metaEquipos": null,
+        "categoriasAceptadas": [
+          {
+            "id": 3,
+            "creadoEn": "2026-11-25T06:50:33.121Z",
+            "actualizadoEn": "2026-11-25T06:50:33.121Z",
+            "nombre": "Cable de prueba documental",
+            "tipo": "CABLEADO",
+            "pesoPromedioKg": 0.3,
+            "valorReposicion": 200,
+            "descripcion": null
+          }
+        ],
+        "totalParticipaciones": 0,
+        "equiposRecibidosTotal": 0,
+        "equiposDeclarados": 0
+      }
+    },
+    {
+      "id": "HTTP-14",
+      "titulo": "Participación pública con CSRF",
+      "fecha": "2026-11-25T00:50:34.908180-06:00",
+      "metodo": "POST",
+      "ruta": "/api/campanas/1/participaciones",
+      "cuerpo": {
+        "nombreParticipante": "Participante de prueba",
+        "equiposDeclarados": 2
+      },
+      "esperado": 201,
+      "recibido": 201,
+      "aprobado": true,
+      "respuesta": {
+        "id": 1,
+        "campana": "Campaña de prueba documental",
+        "equiposDeclarados": 2
+      }
+    },
+    {
+      "id": "HTTP-15",
+      "titulo": "Responsable consulta participantes",
+      "fecha": "2026-11-25T00:50:34.924929-06:00",
+      "metodo": "GET",
+      "ruta": "/api/campanas/1/participaciones",
+      "cuerpo": null,
+      "esperado": 200,
+      "recibido": 200,
+      "aprobado": true,
+      "respuesta": [
+        {
+          "id": 1,
+          "creadoEn": "2026-11-25T06:50:33.238Z",
+          "actualizadoEn": "2026-11-25T06:50:33.238Z",
+          "nombreParticipante": "Participante de prueba",
+          "contacto": null,
+          "equiposDeclarados": 2,
+          "comentario": null
+        }
+      ]
+    },
+    {
+      "id": "HTTP-16",
+      "titulo": "Capturista no consulta participantes",
+      "fecha": "2026-11-25T00:50:34.933440-06:00",
+      "metodo": "GET",
+      "ruta": "/api/campanas/1/participaciones",
+      "cuerpo": null,
+      "esperado": 403,
+      "recibido": 403,
+      "aprobado": true,
+      "respuesta": {
+        "statusCode": 403,
+        "error": "FORBIDDEN",
+        "message": "No tienes permiso para realizar esta acción.",
+        "path": "/api/campanas/1/participaciones",
+        "timestamp": "2026-11-25T06:50:34.930Z"
+      }
+    },
+    {
+      "id": "HTTP-17",
+      "titulo": "Consulta pública de campaña",
+      "fecha": "2026-11-25T00:50:34.944075-06:00",
+      "metodo": "GET",
+      "ruta": "/api/campanas/1",
+      "cuerpo": null,
+      "esperado": 200,
+      "recibido": 200,
+      "aprobado": true,
+      "respuesta": {
+        "id": 1,
+        "creadoEn": "2026-11-25T06:50:33.160Z",
+        "actualizadoEn": "2026-11-25T06:50:33.210Z",
+        "nombre": "Campaña de prueba documental",
+        "descripcion": "Campaña temporal para comprobar la API de acopio.",
+        "fechaInicio": "2026-11-25",
+        "fechaFin": "2026-11-26",
+        "ubicacion": "Punto de prueba",
+        "horario": null,
+        "estado": "ACTIVA",
+        "metaEquipos": null,
+        "categoriasAceptadas": [
+          {
+            "id": 3,
+            "creadoEn": "2026-11-25T06:50:33.121Z",
+            "actualizadoEn": "2026-11-25T06:50:33.121Z",
+            "nombre": "Cable de prueba documental",
+            "tipo": "CABLEADO",
+            "pesoPromedioKg": 0.3,
+            "valorReposicion": 200,
+            "descripcion": null
+          }
+        ],
+        "totalParticipaciones": 1,
+        "equiposRecibidosTotal": 0,
+        "equiposDeclarados": 2
+      }
+    },
+    {
+      "id": "HTTP-18",
+      "titulo": "Administrador crea usuario",
+      "fecha": "2026-11-25T00:50:35.012495-06:00",
+      "metodo": "POST",
+      "ruta": "/api/usuarios",
+      "cuerpo": {
+        "nombre": "Usuario documental",
+        "email": "documental@test.mx",
+        "password": "<omitida>",
+        "rol": "CAPTURISTA"
+      },
+      "esperado": 201,
+      "recibido": 201,
+      "aprobado": true,
+      "respuesta": {
+        "id": 5,
+        "creadoEn": "2026-11-25T06:50:33.344Z",
+        "actualizadoEn": "2026-11-25T06:50:33.344Z",
+        "nombre": "Usuario documental",
+        "email": "documental@test.mx",
+        "rol": "CAPTURISTA",
+        "activo": true
+      }
+    },
+    {
+      "id": "HTTP-19",
+      "titulo": "Administrador desactiva usuario temporal",
+      "fecha": "2026-11-25T00:50:35.038281-06:00",
+      "metodo": "PATCH",
+      "ruta": "/api/usuarios/5",
+      "cuerpo": {
+        "activo": false
+      },
+      "esperado": 200,
+      "recibido": 200,
+      "aprobado": true,
+      "respuesta": {
+        "id": 5,
+        "creadoEn": "2026-11-25T06:50:33.344Z",
+        "actualizadoEn": "2026-11-25T06:50:33.371Z",
+        "nombre": "Usuario documental",
+        "email": "documental@test.mx",
+        "rol": "CAPTURISTA",
+        "activo": false
+      }
+    },
+    {
+      "id": "HTTP-20",
+      "titulo": "Capturista no administra usuarios",
+      "fecha": "2026-11-25T00:50:35.047420-06:00",
+      "metodo": "GET",
+      "ruta": "/api/usuarios",
+      "cuerpo": null,
+      "esperado": 403,
+      "recibido": 403,
+      "aprobado": true,
+      "respuesta": {
+        "statusCode": 403,
+        "error": "FORBIDDEN",
+        "message": "No tienes permiso para realizar esta acción.",
+        "path": "/api/usuarios",
+        "timestamp": "2026-11-25T06:50:35.043Z"
+      }
+    },
+    {
+      "id": "HTTP-21",
+      "titulo": "Responsable crea gestor",
+      "fecha": "2026-11-25T00:50:35.064742-06:00",
+      "metodo": "POST",
+      "ruta": "/api/catalogos/gestores",
+      "cuerpo": {
+        "nombre": "Gestor de prueba documental",
+        "tipo": "Reciclador de prueba"
+      },
+      "esperado": 201,
+      "recibido": 201,
+      "aprobado": true,
+      "respuesta": {
+        "id": 3,
+        "creadoEn": "2026-11-25T06:50:33.404Z",
+        "actualizadoEn": "2026-11-25T06:50:33.404Z",
+        "nombre": "Gestor de prueba documental",
+        "tipo": "Reciclador de prueba",
+        "contacto": null,
+        "direccion": null,
+        "verificado": false,
+        "documentoVerificacion": null,
+        "fechaVerificacion": null
+      }
+    },
+    {
+      "id": "HTTP-22",
+      "titulo": "Administrador verifica gestor",
+      "fecha": "2026-11-25T00:50:35.103318-06:00",
+      "metodo": "POST",
+      "ruta": "/api/catalogos/gestores/3/verificar",
+      "cuerpo": {
+        "documentoVerificacion": "DOCUMENTO-DE-PRUEBA"
+      },
+      "esperado": 201,
+      "recibido": 201,
+      "aprobado": true,
+      "respuesta": {
+        "id": 3,
+        "creadoEn": "2026-11-25T06:50:33.404Z",
+        "actualizadoEn": "2026-11-25T06:50:33.432Z",
+        "nombre": "Gestor de prueba documental",
+        "tipo": "Reciclador de prueba",
+        "contacto": null,
+        "direccion": null,
+        "verificado": true,
+        "documentoVerificacion": "DOCUMENTO-DE-PRUEBA",
+        "fechaVerificacion": "2026-11-25T06:50:35.075Z",
+        "verificadoPor": {
+          "id": 1,
+          "creadoEn": "2026-11-25T06:48:23.239Z",
+          "actualizadoEn": "2026-11-25T06:48:23.239Z",
+          "nombre": "Admin Prueba",
+          "email": "admin@test.mx",
+          "rol": "ADMIN",
+          "activo": true
+        }
+      }
+    },
+    {
+      "id": "HTTP-23",
+      "titulo": "Administrador revoca verificación",
+      "fecha": "2026-11-25T00:50:35.129990-06:00",
+      "metodo": "POST",
+      "ruta": "/api/catalogos/gestores/3/revocar",
+      "cuerpo": null,
+      "esperado": 201,
+      "recibido": 201,
+      "aprobado": true,
+      "respuesta": {
+        "id": 3,
+        "creadoEn": "2026-11-25T06:50:33.404Z",
+        "actualizadoEn": "2026-11-25T06:50:33.473Z",
+        "nombre": "Gestor de prueba documental",
+        "tipo": "Reciclador de prueba",
+        "contacto": null,
+        "direccion": null,
+        "verificado": false,
+        "documentoVerificacion": "DOCUMENTO-DE-PRUEBA",
+        "fechaVerificacion": null,
+        "verificadoPor": null
+      }
+    },
+    {
+      "id": "HTTP-24",
+      "titulo": "Reporte de campañas después de participar",
+      "fecha": "2026-11-25T00:50:35.144594-06:00",
+      "metodo": "GET",
+      "ruta": "/api/indicadores/campanas",
+      "cuerpo": null,
+      "esperado": 200,
+      "recibido": 200,
+      "aprobado": true,
+      "respuesta": {
+        "totales": {
+          "participaciones": 1,
+          "equiposDeclarados": 2,
+          "equiposRecibidos": 0,
+          "kgRecolectados": 0
+        },
+        "campanas": [
+          {
+            "id": 1,
+            "nombre": "Campaña de prueba documental",
+            "estado": "ACTIVA",
+            "fechaInicio": "2026-11-25T06:00:00.000Z",
+            "fechaFin": "2026-11-26T06:00:00.000Z",
+            "metaEquipos": null,
+            "avanceMeta": null,
+            "participaciones": 1,
+            "equiposDeclarados": 2,
+            "equiposRecibidos": 0,
+            "equiposReasignados": 0,
+            "kgRecolectados": 0
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="1" name="01 - Inventario e historial">
+    <mxGraphModel page="1" pageWidth="1950" pageHeight="1750" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="01 - Inventario e historial" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;text;strokeColor=none;fillColor=none;fontSize=25;fontStyle=1;">
+          <mxGeometry as="geometry" x="35" y="20" width="1880" height="50" />
+        </mxCell>
+        <mxCell id="3" value="categorias&#10;─────────────────────────&#10;PK id : serial&#10;UQ nombre : varchar(80)&#10;tipo : enum&#10;peso_promedio_kg : numeric(8,2)&#10;valor_reposicion : numeric(12,2)&#10;descripcion? : text" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="40" y="140" width="510" height="227" />
+        </mxCell>
+        <mxCell id="4" value="equipos&#10;─────────────────────────&#10;PK id : serial&#10;UQ folio : varchar(20)&#10;marca : varchar(80)&#10;modelo : varchar(120)&#10;numero_serie? : varchar(120)&#10;fecha_ingreso : date&#10;condicion : enum&#10;estado_destino : enum&#10;ubicacion? : varchar(160)&#10;destino_actual? : varchar(200)&#10;observaciones? : text&#10;requiere_borrado_datos : boolean&#10;datos_borrados : boolean&#10;FK categoria_id : integer&#10;FK campana_id? : integer&#10;FK registrado_por_id? : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="700" y="140" width="510" height="467" />
+        </mxCell>
+        <mxCell id="5" value="gestores&#10;─────────────────────────&#10;PK id : serial&#10;nombre : varchar(160)&#10;tipo : varchar(120)&#10;contacto? : varchar(160)&#10;direccion? : varchar(255)&#10;verificado : boolean&#10;documento_verificacion? : varchar(160)&#10;fecha_verificacion? : timestamptz&#10;FK verificado_por_id? : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="1360" y="140" width="510" height="299" />
+        </mxCell>
+        <mxCell id="6" value="diagnosticos&#10;─────────────────────────&#10;PK id : serial&#10;descripcion : text&#10;enciende : boolean&#10;dano_estructural : boolean&#10;componentes_peligrosos : boolean&#10;costo_reparacion_estimado : numeric(12,2)&#10;recomendacion : enum&#10;estrategia_aplicada : varchar(60)&#10;justificacion : text&#10;FK equipo_id : integer&#10;FK responsable_id? : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="40" y="950" width="510" height="347" />
+        </mxCell>
+        <mxCell id="7" value="reparaciones&#10;─────────────────────────&#10;PK id : serial&#10;descripcion : text&#10;costo : numeric(12,2)&#10;resultado : enum&#10;ahorro_estimado : numeric(12,2)&#10;fecha : date&#10;FK equipo_id : integer&#10;FK diagnostico_id? : integer&#10;FK responsable_id? : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="700" y="950" width="510" height="299" />
+        </mxCell>
+        <mxCell id="8" value="movimientos&#10;─────────────────────────&#10;PK id : serial&#10;tipo : enum&#10;descripcion : text&#10;estado_anterior? : enum&#10;estado_nuevo : enum&#10;destino? : varchar(200)&#10;evidencia? : varchar(200)&#10;FK equipo_id : integer&#10;FK responsable_id? : integer&#10;FK gestor_id? : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="1360" y="950" width="510" height="323" />
+        </mxCell>
+        <mxCell id="9" value="1 : 0..*" edge="1" parent="1" source="3" target="4" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="10" value="0..1 : 0..*" edge="1" parent="1" source="5" target="8" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;exitX=0.8;exitY=1;entryX=0.8;entryY=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="11" value="1 : 0..*" edge="1" parent="1" source="4" target="6" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;exitX=0.2;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="802" y="820" />
+              <mxPoint x="295" y="820" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="12" value="1 : 0..*" edge="1" parent="1" source="4" target="7" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="13" value="1 : 0..*" edge="1" parent="1" source="4" target="8" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;exitX=0.8;exitY=1;entryX=0.2;entryY=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1108" y="860" />
+              <mxPoint x="1462" y="860" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="14" value="0..1 : 0..*" edge="1" parent="1" source="6" target="7" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="15" value="PK = clave primaria; FK = clave foránea; UQ = único; ? = admite NULL. Se omiten creado_en y actualizado_en.&#10;Referencias a usuarios: vista 03. Relación equipos–campañas: vista 02. Tipos enum y restricciones: diccionario del Markdown." vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;shape=note;fillColor=#fff2cc;strokeColor=#d6b656;">
+          <mxGeometry as="geometry" x="40" y="1540" width="1830" height="120" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="2" name="02 - Campañas y categorías admitidas">
+    <mxGraphModel page="1" pageWidth="1950" pageHeight="1550" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="02 - Campañas y categorías admitidas" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;text;strokeColor=none;fillColor=none;fontSize=25;fontStyle=1;">
+          <mxGeometry as="geometry" x="35" y="20" width="1880" height="50" />
+        </mxCell>
+        <mxCell id="3" value="campanas&#10;─────────────────────────&#10;PK id : serial&#10;nombre : varchar(160)&#10;descripcion : text&#10;fecha_inicio : date&#10;fecha_fin : date&#10;ubicacion : varchar(200)&#10;horario? : varchar(120)&#10;estado : enum&#10;meta_equipos? : integer&#10;FK creada_por_id? : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="40" y="140" width="510" height="323" />
+        </mxCell>
+        <mxCell id="4" value="campana_categorias&#10;─────────────────────────&#10;PK,FK campanas_id : integer&#10;PK,FK categorias_id : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="700" y="140" width="510" height="131" />
+        </mxCell>
+        <mxCell id="5" value="categorias&#10;─────────────────────────&#10;PK id : serial&#10;UQ nombre : varchar(80)&#10;tipo : enum" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="1360" y="140" width="510" height="155" />
+        </mxCell>
+        <mxCell id="6" value="participaciones&#10;─────────────────────────&#10;PK id : serial&#10;nombre_participante : varchar(120)&#10;contacto? : varchar(160)&#10;equipos_declarados : integer&#10;comentario? : text&#10;FK campana_id : integer&#10;FK usuario_id? : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="40" y="950" width="510" height="251" />
+        </mxCell>
+        <mxCell id="7" value="equipos&#10;─────────────────────────&#10;PK id : serial&#10;UQ folio : varchar(20)&#10;FK categoria_id : integer&#10;FK campana_id? : integer&#10;FK registrado_por_id? : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="700" y="950" width="510" height="203" />
+        </mxCell>
+        <mxCell id="8" value="1 : 0..*" edge="1" parent="1" source="3" target="4" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="9" value="1 : 0..*" edge="1" parent="1" source="5" target="4" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="10" value="1 : 0..*" edge="1" parent="1" source="3" target="6" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;exitX=0.3;exitY=1;entryX=0.3;entryY=0;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="11" value="0..1 : 0..*" edge="1" parent="1" source="3" target="7" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;exitX=0.8;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="448" y="800" />
+              <mxPoint x="955" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="12" value="campana_categorias resuelve la relación N:M. Su PK es (campanas_id, categorias_id).&#10;Una participación no se vincula a un equipo individual: equipos_declarados expresa una intención.&#10;Las tablas equipos y categorias se muestran aquí con campos seleccionados. Referencias de usuario: vista 03." vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;shape=note;fillColor=#fff2cc;strokeColor=#d6b656;">
+          <mxGeometry as="geometry" x="40" y="1330" width="1830" height="130" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="3" name="03 - Usuarios y referencias opcionales">
+    <mxGraphModel page="1" pageWidth="2200" pageHeight="1150" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="03 - Usuarios y referencias opcionales" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;text;strokeColor=none;fillColor=none;fontSize=25;fontStyle=1;">
+          <mxGeometry as="geometry" x="35" y="20" width="2130" height="50" />
+        </mxCell>
+        <mxCell id="3" value="usuarios&#10;─────────────────────────&#10;PK id : serial&#10;nombre : varchar(120)&#10;UQ email : varchar(160)&#10;password_hash : varchar(255)&#10;rol : enum&#10;activo : boolean" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="830" y="120" width="510" height="227" />
+        </mxCell>
+        <mxCell id="4" value="gestores&#10;─────────────────────&#10;PK id : serial&#10;FK verificado_por_id? : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="35" y="740" width="280" height="131" />
+        </mxCell>
+        <mxCell id="5" value="0..1 : 0..*" edge="1" parent="1" source="3" target="4" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1085" y="590" />
+              <mxPoint x="175" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6" value="equipos&#10;─────────────────────&#10;PK id : serial&#10;FK registrado_por_id? : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="340" y="740" width="280" height="131" />
+        </mxCell>
+        <mxCell id="7" value="0..1 : 0..*" edge="1" parent="1" source="3" target="6" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1085" y="590" />
+              <mxPoint x="480" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8" value="movimientos&#10;─────────────────────&#10;PK id : serial&#10;FK responsable_id? : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="645" y="740" width="280" height="131" />
+        </mxCell>
+        <mxCell id="9" value="0..1 : 0..*" edge="1" parent="1" source="3" target="8" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1085" y="590" />
+              <mxPoint x="785" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="10" value="diagnosticos&#10;─────────────────────&#10;PK id : serial&#10;FK responsable_id? : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="950" y="740" width="280" height="131" />
+        </mxCell>
+        <mxCell id="11" value="0..1 : 0..*" edge="1" parent="1" source="3" target="10" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1085" y="590" />
+              <mxPoint x="1090" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="12" value="reparaciones&#10;─────────────────────&#10;PK id : serial&#10;FK responsable_id? : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="1255" y="740" width="280" height="131" />
+        </mxCell>
+        <mxCell id="13" value="0..1 : 0..*" edge="1" parent="1" source="3" target="12" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1085" y="590" />
+              <mxPoint x="1395" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="14" value="participaciones&#10;─────────────────────&#10;PK id : serial&#10;FK usuario_id? : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="1560" y="740" width="280" height="131" />
+        </mxCell>
+        <mxCell id="15" value="0..1 : 0..*" edge="1" parent="1" source="3" target="14" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1085" y="590" />
+              <mxPoint x="1700" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="16" value="campanas&#10;─────────────────────&#10;PK id : serial&#10;FK creada_por_id? : integer" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="1865" y="740" width="280" height="131" />
+        </mxCell>
+        <mxCell id="17" value="0..1 : 0..*" edge="1" parent="1" source="3" target="16" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;startArrow=none;fontSize=16;fontFamily=Helvetica;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1085" y="590" />
+              <mxPoint x="2005" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="18" value="Todas estas FKs admiten NULL y usan ON DELETE SET NULL. La ausencia de una cuenta no elimina el registro de dominio.&#10;Cada caja inferior muestra solo su PK y la referencia de usuario; el resto de los campos se documenta en el diccionario.&#10;La coincidencia de cardinalidades no convierte estas referencias en una sola FK: son siete relaciones independientes." vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;shape=note;fillColor=#fff2cc;strokeColor=#d6b656;">
+          <mxGeometry as="geometry" x="40" y="960" width="2100" height="130" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="4" name="04 - Tablas técnicas">
+    <mxGraphModel page="1" pageWidth="1500" pageHeight="850" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="04 - Tablas técnicas" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;text;strokeColor=none;fillColor=none;fontSize=25;fontStyle=1;">
+          <mxGeometry as="geometry" x="35" y="20" width="1430" height="50" />
+        </mxCell>
+        <mxCell id="3" value="sesiones&#10;─────────────────────────&#10;PK sid : varchar&#10;sess : json, NOT NULL&#10;expire : timestamp(6), NOT NULL&#10;Índice sobre expire" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="50" y="180" width="630" height="270" />
+        </mxCell>
+        <mxCell id="4" value="migrations&#10;─────────────────────────&#10;PK id : integer autogenerado&#10;timestamp : bigint, NOT NULL&#10;name : varchar, NOT NULL" vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry as="geometry" x="800" y="180" width="630" height="270" />
+        </mxCell>
+        <mxCell id="5" value="Estructuras esperadas de connect-pg-simple y TypeORM, según sus fuentes oficiales. No pertenecen al CREATE TABLE de la migración inicial.&#10;No existen FKs entre estas tablas ni hacia usuarios: la sesión almacena datos en JSON y migrations registra versiones de esquema.&#10;Su existencia efectiva depende del arranque y uso de los componentes correspondientes." vertex="1" parent="1" style="whiteSpace=wrap;html=0;fontFamily=Helvetica;fontSize=16;align=left;spacing=15;fillColor=#dae8fc;strokeColor=#6c8ebf;shape=note;fillColor=#fff2cc;strokeColor=#d6b656;">
+          <mxGeometry as="geometry" x="50" y="550" width="1380" height="170" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
