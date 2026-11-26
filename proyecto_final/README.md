@@ -79,6 +79,19 @@ npm run dev                 # http://localhost:5173 (redirige /api al backend)
 
 ### Cuentas de prueba
 
+Con `SEED_ON_START=true`, el arranque normal (`npm start` o `yarn start`) crea las tres
+cuentas demo que falten después de ejecutar las migraciones y antes de aceptar peticiones.
+Usa `SEED_DEMO_PASSWORD` como contraseña inicial (por defecto `Demo2026!`). No modifica
+contraseñas, roles ni estado de cuentas existentes y no requiere que la base esté vacía.
+Esto también funciona en Render con su runtime Node, sin Docker.
+
+Para cargar además categorías, equipos y campañas de ejemplo en una base vacía, ejecuta
+el seed completo antes del primer arranque. Si ya existen usuarios, el seed completo omite
+la carga de datos. En Docker, el script de entrada intenta esa carga antes de iniciar Nest.
+Cambiar `SEED_DEMO_PASSWORD` después no restablece contraseñas: un administrador debe
+hacerlo desde la gestión de usuarios. Para desactivar la creación automática, usa
+`SEED_ON_START=false`.
+
 El seed crea tres cuentas (la contraseña es el valor de `SEED_DEMO_PASSWORD`, por defecto `Demo2026!` en local):
 
 | Rol | Correo |

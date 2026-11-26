@@ -18,6 +18,10 @@ services:
         sync: false # cadena de conexión de Neon (se captura en el panel de Render)
       - key: DB_SSL
         value: "true"
+      - key: SEED_ON_START
+        value: "true"
+      - key: SEED_DEMO_PASSWORD
+        sync: false # contraseña inicial de las cuentas demo; no cambia cuentas existentes
       - key: SESSION_SECRET
         generateValue: true
       - key: CSRF_SECRET
