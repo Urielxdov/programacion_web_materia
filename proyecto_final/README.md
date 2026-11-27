@@ -7,6 +7,19 @@ sociales y económicos.
 
 > Proyecto integrador · Programación Web y Desarrollo Sustentable · AGO-DIC 2026
 
+## Autoría y licencia
+
+**Copyright © 2026 Uriel Galván. Todos los derechos reservados.**
+
+La copia de este proyecto se proporciona exclusivamente para **revisión y evaluación académica**.
+La entrega no implica cesión de derechos de autor. Su presentación en eventos, congresos, ferias,
+concursos o exposiciones, así como su publicación, redistribución, reutilización o explotación,
+requiere autorización previa y por escrito del autor, salvo los usos permitidos por la legislación aplicable.
+Reconocer la autoría no sustituye esa autorización.
+
+Consulta las condiciones completas en [LICENSE](LICENSE). Las dependencias y los materiales de
+terceros conservan sus propias licencias.
+
 ## Tecnologías
 
 | Capa                     | Tecnología                                                                                               |
