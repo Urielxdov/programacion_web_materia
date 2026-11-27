@@ -9,17 +9,17 @@ sociales y económicos.
 
 ## Tecnologías
 
-| Capa | Tecnología |
-|---|---|
-| Presentación (Vista) | React 19 + TypeScript, Vite, Tailwind CSS 4, React Router 7 |
-| Estado del servidor | TanStack Query 5 (caché, carga, errores, invalidación) |
-| Estado de interfaz | Zustand 5 (tamaño de letra, contraste, menú, borrador del registro por pasos) |
-| Aplicación (Controlador) | NestJS 11 (controladores, DTOs con class-validator, guards de sesión, rol y CSRF) |
-| Negocio (Modelo) | Entidades con reglas de dominio, servicios, patrones Repository, Strategy, Factory y Observer |
-| Persistencia | PostgreSQL 16 con TypeORM (10 tablas relacionadas, migraciones versionadas) |
-| Servicios web | API REST JSON documentada con Swagger (`/api/docs`) |
-| Seguridad | Sesiones en servidor (express-session + PostgreSQL), argon2id, CSRF double-submit, Helmet, rate limiting |
-| Despliegue | Render (Web Service con HTTPS) + Neon (PostgreSQL administrado) |
+| Capa                     | Tecnología                                                                                               |
+| ------------------------ | -------------------------------------------------------------------------------------------------------- |
+| Presentación (Vista)     | React 19 + TypeScript, Vite, Tailwind CSS 4, React Router 7                                              |
+| Estado del servidor      | TanStack Query 5 (caché, carga, errores, invalidación)                                                   |
+| Estado de interfaz       | Zustand 5 (tamaño de letra, contraste, menú, borrador del registro por pasos)                            |
+| Aplicación (Controlador) | NestJS 11 (controladores, DTOs con class-validator, guards de sesión, rol y CSRF)                        |
+| Negocio (Modelo)         | Entidades con reglas de dominio, servicios, patrones Repository, Strategy, Factory y Observer            |
+| Persistencia             | PostgreSQL 16 con TypeORM (10 tablas relacionadas, migraciones versionadas)                              |
+| Servicios web            | API REST JSON documentada con Swagger (`/api/docs`)                                                      |
+| Seguridad                | Sesiones en servidor (express-session + PostgreSQL), argon2id, CSRF double-submit, Helmet, rate limiting |
+| Despliegue               | Render (Web Service con HTTPS) + Neon (PostgreSQL administrado)                                          |
 
 ## Estructura
 
@@ -94,13 +94,11 @@ hacerlo desde la gestión de usuarios. Para desactivar la creación automática,
 
 El seed crea tres cuentas (la contraseña es el valor de `SEED_DEMO_PASSWORD`, por defecto `Demo2026!` en local):
 
-| Rol | Correo |
-|---|---|
-| Administrador | admin@ewaste360.mx |
+| Rol                   | Correo                   |
+| --------------------- | ------------------------ |
+| Administrador         | admin@ewaste360.mx       |
 | Responsable ambiental | responsable@ewaste360.mx |
-| Capturista | capturista@ewaste360.mx |
-
-> En el despliegue público se usa otra contraseña, entregada al docente por un medio privado.
+| Capturista            | capturista@ewaste360.mx  |
 
 ### Pruebas
 
@@ -120,7 +118,7 @@ Los resultados están en [`docs/evidencia-pruebas-e2e.txt`](docs/evidencia-prueb
 1. Crea un proyecto en [Neon](https://neon.tech) y copia la cadena de conexión (`postgres://…?sslmode=require`).
 2. En [Render](https://render.com): **New → Blueprint** y selecciona este repositorio. `render.yaml` crea el
    Web Service con `npm run build` / `npm start`. Si el proyecto no está en la raíz del repositorio, indica
-   `proyecto_final` como *Root Directory*.
+   `proyecto_final` como _Root Directory_.
 3. Captura `DATABASE_URL` con la cadena de Neon. `SESSION_SECRET` y `CSRF_SECRET` se generan solos.
 4. Al arrancar, la app ejecuta las migraciones automáticamente.
 5. Carga los datos de demostración desde tu computadora, apuntando a Neon:
@@ -131,7 +129,6 @@ Los resultados están en [`docs/evidencia-pruebas-e2e.txt`](docs/evidencia-prueb
    (En PowerShell: `$env:DATABASE_URL="…"; $env:DB_SSL="true"; $env:SEED_DEMO_PASSWORD="…"; npm run seed`.)
 
 > El plan gratuito de Render apaga el servicio tras 15 minutos sin visitas; la primera carga tarda ~50 s.
-> Abre la URL unos minutos antes de la demostración.
 
 ## Documentación
 
